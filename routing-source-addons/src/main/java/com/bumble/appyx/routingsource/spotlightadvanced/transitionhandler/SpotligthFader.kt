@@ -28,7 +28,7 @@ class SpotlightAdvancedFader<T>(
             transitionSpec = transitionSpec,
             targetValueByState = {
                 when (it) {
-                    SpotlightAdvanced.TransitionState.ACTIVE -> 1f
+                    SpotlightAdvanced.TransitionState.Active -> 1f
                     else -> 0f
                 }
             })

@@ -15,7 +15,7 @@ class GoToPrevious<Routing : Any> :
     }
 
     private fun areTherePreviousElements(elements: SpotlightAdvancedElements<Routing>) =
-        elements.any { it.targetState == SpotlightAdvanced.TransitionState.INACTIVE_BEFORE }
+        elements.any { it.targetState == SpotlightAdvanced.TransitionState.InactiveBefore }
 
     override fun onBackPressed() {
         routingSource.accept(Previous())

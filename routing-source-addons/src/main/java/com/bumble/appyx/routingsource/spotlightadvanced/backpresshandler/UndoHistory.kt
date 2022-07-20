@@ -2,7 +2,7 @@ package com.bumble.appyx.routingsource.spotlightadvanced.backpresshandler
 
 import com.bumble.appyx.core.routing.backpresshandlerstrategies.BaseBackPressHandlerStrategy
 import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced
-import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState.ACTIVE
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState.Active
 import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvancedElements
 import com.bumble.appyx.routingsource.spotlightadvanced.operation.Activate
 import kotlinx.coroutines.flow.Flow
@@ -30,7 +30,7 @@ class UndoHistory<Routing : Any>(
         history.size > 1
 
     private fun SpotlightAdvancedElements<Routing>.addToHistory() {
-        val newIndex = indexOfFirst { it.targetState == ACTIVE }
+        val newIndex = indexOfFirst { it.targetState == Active }
         if (newIndex != history.lastOrNull()) {
             history.addLast(newIndex)
             adjustToHistoryLimit()

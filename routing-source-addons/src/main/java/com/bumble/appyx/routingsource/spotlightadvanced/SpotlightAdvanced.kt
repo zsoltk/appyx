@@ -29,9 +29,18 @@ class SpotlightAdvanced<Routing : Any>(
     savedStateMap = savedStateMap,
     key = key,
 ) {
+    init {
+//        if (items.size != 4) {
+//            error("This is just a demonstration example, tailored to exactly 4 elements." +
+//                "Feel free to adapt this routing source to support an arbitrary number elements.")
+//        }
+    }
 
-    enum class TransitionState {
-        INACTIVE_BEFORE, ACTIVE, INACTIVE_AFTER;
+    sealed class TransitionState {
+        object InactiveBefore : TransitionState()
+        object Active : TransitionState()
+        object InactiveAfter : TransitionState()
+        data class Circular(val offset: Int, val max: Int) : TransitionState()
     }
 
     override val initialElements = items.toSpotlightAdvancedElements(initialActiveIndex)

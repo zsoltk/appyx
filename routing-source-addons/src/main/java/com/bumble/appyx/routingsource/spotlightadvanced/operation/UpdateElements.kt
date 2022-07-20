@@ -5,9 +5,9 @@ import com.bumble.appyx.core.routing.RoutingElements
 import com.bumble.appyx.core.routing.RoutingKey
 import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced
 import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState
-import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState.ACTIVE
-import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState.INACTIVE_AFTER
-import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState.INACTIVE_BEFORE
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState.Active
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState.InactiveAfter
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState.InactiveBefore
 import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvancedElement
 import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvancedElements
 import kotlinx.parcelize.Parcelize
@@ -28,7 +28,7 @@ class UpdateElements<T : Any>(
             }
         }
         return if (initialActiveIndex == null) {
-            val currentActiveElement = elements.find { it.targetState == ACTIVE }
+            val currentActiveElement = elements.find { it.targetState == Active }
 
             // if current routing exists in the new list of items and initialActiveIndex is null
             // then keep existing routing active
@@ -55,9 +55,9 @@ fun <T : Any> SpotlightAdvanced<T>.updateElements(
 internal fun <T> List<T>.toSpotlightAdvancedElements(activeIndex: Int): SpotlightAdvancedElements<T> =
     mapIndexed { index, item ->
         val state = when {
-            index < activeIndex -> INACTIVE_BEFORE
-            index == activeIndex -> ACTIVE
-            else -> INACTIVE_AFTER
+            index < activeIndex -> InactiveBefore
+            index == activeIndex -> Active
+            else -> InactiveAfter
         }
         SpotlightAdvancedElement(
             key = RoutingKey(item),

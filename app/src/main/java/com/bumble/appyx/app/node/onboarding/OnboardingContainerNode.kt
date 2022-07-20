@@ -46,13 +46,15 @@ import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.modality.BuildContext.Companion.root
 import com.bumble.appyx.core.node.Node
 import com.bumble.appyx.core.node.ParentNode
-import com.bumble.appyx.routingsource.spotlight.Spotlight
-import com.bumble.appyx.routingsource.spotlight.backpresshandler.GoToPrevious
-import com.bumble.appyx.routingsource.spotlight.hasNext
-import com.bumble.appyx.routingsource.spotlight.hasPrevious
-import com.bumble.appyx.routingsource.spotlight.operation.next
-import com.bumble.appyx.routingsource.spotlight.operation.previous
-import com.bumble.appyx.routingsource.spotlight.transitionhandler.rememberSpotlightSlider
+import com.bumble.appyx.routingsource.spotlightadvanced.backpresshandler.GoToPrevious
+import com.bumble.appyx.routingsource.spotlightadvanced.hasNext
+import com.bumble.appyx.routingsource.spotlightadvanced.hasPrevious
+import com.bumble.appyx.routingsource.spotlightadvanced.operation.next
+import com.bumble.appyx.routingsource.spotlightadvanced.operation.previous
+import com.bumble.appyx.routingsource.spotlightadvanced.transitionhandler.rememberSpotlightAdvancedFader
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced
+import com.bumble.appyx.routingsource.spotlightadvanced.operation.switchToCircular
+import com.bumble.appyx.routingsource.spotlightadvanced.transitionhandler.rememberSpotlightAdvancedSlider
 import kotlinx.parcelize.Parcelize
 
 @ExperimentalUnitApi
@@ -60,7 +62,7 @@ import kotlinx.parcelize.Parcelize
 @ExperimentalComposeUiApi
 class OnboardingContainerNode(
     buildContext: BuildContext,
-    private val spotlight: Spotlight<Routing> = Spotlight(
+    private val spotlight: SpotlightAdvanced<Routing> = SpotlightAdvanced(
         items = listOf(
             Routing.IntroScreen,
             Routing.ApplicationTree,
@@ -117,7 +119,7 @@ class OnboardingContainerNode(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth(),
-                transitionHandler = rememberSpotlightSlider(clipToBounds = true),
+                transitionHandler = rememberSpotlightAdvancedSlider(),
                 routingSource = spotlight
             )
             Box(
@@ -126,9 +128,9 @@ class OnboardingContainerNode(
                     .padding(bottom = 12.dp),
                 contentAlignment = Alignment.Center
             ) {
-                SpotlightDotsIndicator(
-                    spotlight = spotlight
-                )
+//                SpotlightDotsIndicator(
+//                    spotlight = spotlight
+//                )
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -140,6 +142,14 @@ class OnboardingContainerNode(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    TextButton(
+                        onClick = { spotlight.switchToCircular() }
+                    ) {
+                        Text(
+                            text = "Circular".toUpperCase(Locale.current),
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
                     if (hasNext.value) {
                         TextButton(
                             modifier = Modifier.alpha(previousVisibility.value),

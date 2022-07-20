@@ -21,19 +21,19 @@ class Activate<T : Any>(
             when {
                 index < toActivateIndex -> {
                     element.transitionTo(
-                        newTargetState = TransitionState.INACTIVE_BEFORE,
+                        newTargetState = TransitionState.InactiveBefore,
                         operation = this
                     )
                 }
                 index == toActivateIndex -> {
                     element.transitionTo(
-                        newTargetState = TransitionState.ACTIVE,
+                        newTargetState = TransitionState.Active,
                         operation = this
                     )
                 }
                 else -> {
                     element.transitionTo(
-                        newTargetState = TransitionState.INACTIVE_AFTER,
+                        newTargetState = TransitionState.InactiveAfter,
                         operation = this
                     )
                 }
