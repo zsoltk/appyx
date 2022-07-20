@@ -1,20 +1,20 @@
-package com.bumble.appyx.routingsource.spotlight.operation
+package com.bumble.appyx.routingsource.spotlightadvanced.operation
 
 import com.bumble.appyx.core.routing.RoutingElements
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight.TransitionState.ACTIVE
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight.TransitionState.INACTIVE_AFTER
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight.TransitionState.INACTIVE_BEFORE
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState.ACTIVE
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState.INACTIVE_AFTER
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState.INACTIVE_BEFORE
 import kotlinx.parcelize.Parcelize
 
 
 @Parcelize
-class Previous<T : Any> : SpotlightOperation<T> {
+class Previous<T : Any> : SpotlightAdvancedOperation<T> {
 
-    override fun isApplicable(elements: RoutingElements<T, Spotlight.TransitionState>) =
+    override fun isApplicable(elements: RoutingElements<T, SpotlightAdvanced.TransitionState>) =
         elements.any { it.fromState == INACTIVE_BEFORE }
 
-    override fun invoke(elements: RoutingElements<T, Spotlight.TransitionState>): RoutingElements<T, Spotlight.TransitionState> {
+    override fun invoke(elements: RoutingElements<T, SpotlightAdvanced.TransitionState>): RoutingElements<T, SpotlightAdvanced.TransitionState> {
         val previousKey =
             elements.last { it.targetState == INACTIVE_BEFORE }.key
 
@@ -40,7 +40,7 @@ class Previous<T : Any> : SpotlightOperation<T> {
     }
 }
 
-fun <T : Any> Spotlight<T>.previous() {
+fun <T : Any> SpotlightAdvanced<T>.previous() {
     accept(Previous())
 }
 

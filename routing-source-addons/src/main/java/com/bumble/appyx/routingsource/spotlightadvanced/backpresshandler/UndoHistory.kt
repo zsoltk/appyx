@@ -1,16 +1,16 @@
-package com.bumble.appyx.routingsource.spotlight.backpresshandler
+package com.bumble.appyx.routingsource.spotlightadvanced.backpresshandler
 
 import com.bumble.appyx.core.routing.backpresshandlerstrategies.BaseBackPressHandlerStrategy
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight.TransitionState.ACTIVE
-import com.bumble.appyx.routingsource.spotlight.SpotlightElements
-import com.bumble.appyx.routingsource.spotlight.operation.Activate
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState.ACTIVE
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvancedElements
+import com.bumble.appyx.routingsource.spotlightadvanced.operation.Activate
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class UndoHistory<Routing : Any>(
     private val historyLimit: Int = 10
-) : BaseBackPressHandlerStrategy<Routing, Spotlight.TransitionState>() {
+) : BaseBackPressHandlerStrategy<Routing, SpotlightAdvanced.TransitionState>() {
 
     private val history = ArrayDeque<Int>()
 
@@ -29,7 +29,7 @@ class UndoHistory<Routing : Any>(
     private fun historyHasElements() =
         history.size > 1
 
-    private fun SpotlightElements<Routing>.addToHistory() {
+    private fun SpotlightAdvancedElements<Routing>.addToHistory() {
         val newIndex = indexOfFirst { it.targetState == ACTIVE }
         if (newIndex != history.lastOrNull()) {
             history.addLast(newIndex)

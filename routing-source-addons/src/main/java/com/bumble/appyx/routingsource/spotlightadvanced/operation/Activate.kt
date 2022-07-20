@@ -1,15 +1,15 @@
-package com.bumble.appyx.routingsource.spotlight.operation
+package com.bumble.appyx.routingsource.spotlightadvanced.operation
 
 import com.bumble.appyx.core.routing.RoutingElements
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight.TransitionState
-import com.bumble.appyx.routingsource.spotlight.currentIndex
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState
+import com.bumble.appyx.routingsource.spotlightadvanced.currentIndex
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class Activate<T : Any>(
     private val index: Int
-) : SpotlightOperation<T> {
+) : SpotlightAdvancedOperation<T> {
 
     override fun isApplicable(elements: RoutingElements<T, TransitionState>) =
         index != elements.currentIndex && index <= elements.lastIndex && index >= 0
@@ -43,6 +43,6 @@ class Activate<T : Any>(
 }
 
 
-fun <T : Any> Spotlight<T>.activate(index: Int) {
+fun <T : Any> SpotlightAdvanced<T>.activate(index: Int) {
     accept(Activate(index))
 }

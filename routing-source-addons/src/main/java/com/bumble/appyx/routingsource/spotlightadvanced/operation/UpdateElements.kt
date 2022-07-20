@@ -1,15 +1,15 @@
-package com.bumble.appyx.routingsource.spotlight.operation
+package com.bumble.appyx.routingsource.spotlightadvanced.operation
 
 import com.bumble.appyx.core.routing.Operation.Noop
 import com.bumble.appyx.core.routing.RoutingElements
 import com.bumble.appyx.core.routing.RoutingKey
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight.TransitionState
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight.TransitionState.ACTIVE
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight.TransitionState.INACTIVE_AFTER
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight.TransitionState.INACTIVE_BEFORE
-import com.bumble.appyx.routingsource.spotlight.SpotlightElement
-import com.bumble.appyx.routingsource.spotlight.SpotlightElements
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState.ACTIVE
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState.INACTIVE_AFTER
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState.INACTIVE_BEFORE
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvancedElement
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvancedElements
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 
@@ -17,7 +17,7 @@ import kotlinx.parcelize.RawValue
 class UpdateElements<T : Any>(
     private val elements: @RawValue List<T>,
     private val initialActiveIndex: Int? = null,
-) : SpotlightOperation<T> {
+) : SpotlightAdvancedOperation<T> {
 
     override fun isApplicable(elements: RoutingElements<T, TransitionState>) = true
 
@@ -33,33 +33,33 @@ class UpdateElements<T : Any>(
             // if current routing exists in the new list of items and initialActiveIndex is null
             // then keep existing routing active
             if (this.elements.contains(currentActiveElement?.key?.routing)) {
-                this.elements.toSpotlightElements(elements.indexOf(currentActiveElement))
+                this.elements.toSpotlightAdvancedElements(elements.indexOf(currentActiveElement))
             } else {
                 // if current routing does not exist in the new list of items and initialActiveIndex is null
                 // then set 0 as active index
-                this.elements.toSpotlightElements(0)
+                this.elements.toSpotlightAdvancedElements(0)
             }
         } else {
-            this.elements.toSpotlightElements(initialActiveIndex)
+            this.elements.toSpotlightAdvancedElements(initialActiveIndex)
         }
     }
 }
 
-fun <T : Any> Spotlight<T>.updateElements(
+fun <T : Any> SpotlightAdvanced<T>.updateElements(
     items: List<T>,
     initialActiveItem: Int? = null
 ) {
     accept(UpdateElements(items, initialActiveItem))
 }
 
-internal fun <T> List<T>.toSpotlightElements(activeIndex: Int): SpotlightElements<T> =
+internal fun <T> List<T>.toSpotlightAdvancedElements(activeIndex: Int): SpotlightAdvancedElements<T> =
     mapIndexed { index, item ->
         val state = when {
             index < activeIndex -> INACTIVE_BEFORE
             index == activeIndex -> ACTIVE
             else -> INACTIVE_AFTER
         }
-        SpotlightElement(
+        SpotlightAdvancedElement(
             key = RoutingKey(item),
             fromState = state,
             targetState = state,

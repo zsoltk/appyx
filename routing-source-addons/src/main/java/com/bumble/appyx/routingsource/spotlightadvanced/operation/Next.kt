@@ -1,15 +1,15 @@
-package com.bumble.appyx.routingsource.spotlight.operation
+package com.bumble.appyx.routingsource.spotlightadvanced.operation
 
 import com.bumble.appyx.core.routing.RoutingElements
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight.TransitionState
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight.TransitionState.ACTIVE
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight.TransitionState.INACTIVE_AFTER
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight.TransitionState.INACTIVE_BEFORE
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState.ACTIVE
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState.INACTIVE_AFTER
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState.INACTIVE_BEFORE
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class Next<T : Any> : SpotlightOperation<T> {
+class Next<T : Any> : SpotlightAdvancedOperation<T> {
 
     override fun isApplicable(elements: RoutingElements<T, TransitionState>) =
         elements.any { it.fromState == INACTIVE_AFTER }
@@ -40,7 +40,7 @@ class Next<T : Any> : SpotlightOperation<T> {
     }
 }
 
-fun <T : Any> Spotlight<T>.next() {
+fun <T : Any> SpotlightAdvanced<T>.next() {
     accept(Next())
 }
 

@@ -1,6 +1,6 @@
-package com.bumble.appyx.routingsource.spotlight.operation
+package com.bumble.appyx.routingsource.spotlightadvanced.operation
 
 import com.bumble.appyx.core.routing.Operation
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced
 
-typealias SpotlightOperation<T> = Operation<T, Spotlight.TransitionState>
+typealias SpotlightAdvancedOperation<T> = Operation<T, SpotlightAdvanced.TransitionState>

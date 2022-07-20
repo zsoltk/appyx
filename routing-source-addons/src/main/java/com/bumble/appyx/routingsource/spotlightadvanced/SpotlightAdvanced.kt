@@ -6,12 +6,12 @@ import com.bumble.appyx.core.routing.onscreen.OnScreenStateResolver
 import com.bumble.appyx.core.routing.operationstrategies.ExecuteImmediately
 import com.bumble.appyx.core.routing.operationstrategies.OperationStrategy
 import com.bumble.appyx.core.state.SavedStateMap
-import com.bumble.appyx.routingsource.spotlight.SpotlightOnScreenResolver
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight.TransitionState
-import com.bumble.appyx.routingsource.spotlight.backpresshandler.GoToDefault
-import com.bumble.appyx.routingsource.spotlight.operation.toSpotlightElements
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvancedOnScreenResolver
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState
+import com.bumble.appyx.routingsource.spotlightadvanced.backpresshandler.GoToDefault
+import com.bumble.appyx.routingsource.spotlightadvanced.operation.toSpotlightAdvancedElements
 
-class Spotlight<Routing : Any>(
+class SpotlightAdvanced<Routing : Any>(
     items: List<Routing>,
     initialActiveIndex: Int = 0,
     savedStateMap: SavedStateMap?,
@@ -20,7 +20,7 @@ class Spotlight<Routing : Any>(
         initialActiveIndex
     ),
     operationStrategy: OperationStrategy<Routing, TransitionState> = ExecuteImmediately(),
-    screenResolver: OnScreenStateResolver<TransitionState> = SpotlightOnScreenResolver
+    screenResolver: OnScreenStateResolver<TransitionState> = SpotlightAdvancedOnScreenResolver
 ) : BaseRoutingSource<Routing, TransitionState>(
     backPressHandler = backPressHandler,
     operationStrategy = operationStrategy,
@@ -34,6 +34,6 @@ class Spotlight<Routing : Any>(
         INACTIVE_BEFORE, ACTIVE, INACTIVE_AFTER;
     }
 
-    override val initialElements = items.toSpotlightElements(initialActiveIndex)
+    override val initialElements = items.toSpotlightAdvancedElements(initialActiveIndex)
 
 }

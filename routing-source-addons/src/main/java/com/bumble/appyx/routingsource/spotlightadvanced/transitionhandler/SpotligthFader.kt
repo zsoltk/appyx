@@ -1,4 +1,4 @@
-package com.bumble.appyx.routingsource.spotlight.transitionhandler
+package com.bumble.appyx.routingsource.spotlightadvanced.transitionhandler
 
 import androidx.compose.animation.core.Transition
 import androidx.compose.animation.core.animateFloat
@@ -11,24 +11,24 @@ import androidx.compose.ui.draw.alpha
 import com.bumble.appyx.core.routing.transition.ModifierTransitionHandler
 import com.bumble.appyx.core.routing.transition.TransitionDescriptor
 import com.bumble.appyx.core.routing.transition.TransitionSpec
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced
 
 @Suppress("TransitionPropertiesLabel")
 
-class SpotlightFader<T>(
-    private val transitionSpec: TransitionSpec<Spotlight.TransitionState, Float> = { spring() }
-) : ModifierTransitionHandler<T, Spotlight.TransitionState>() {
+class SpotlightAdvancedFader<T>(
+    private val transitionSpec: TransitionSpec<SpotlightAdvanced.TransitionState, Float> = { spring() }
+) : ModifierTransitionHandler<T, SpotlightAdvanced.TransitionState>() {
 
     override fun createModifier(
         modifier: Modifier,
-        transition: Transition<Spotlight.TransitionState>,
-        descriptor: TransitionDescriptor<T, Spotlight.TransitionState>
+        transition: Transition<SpotlightAdvanced.TransitionState>,
+        descriptor: TransitionDescriptor<T, SpotlightAdvanced.TransitionState>
     ): Modifier = modifier.composed {
         val alpha = transition.animateFloat(
             transitionSpec = transitionSpec,
             targetValueByState = {
                 when (it) {
-                    Spotlight.TransitionState.ACTIVE -> 1f
+                    SpotlightAdvanced.TransitionState.ACTIVE -> 1f
                     else -> 0f
                 }
             })
@@ -38,8 +38,8 @@ class SpotlightFader<T>(
 }
 
 @Composable
-fun <T> rememberSpotlightFader(
-    transitionSpec: TransitionSpec<Spotlight.TransitionState, Float> = { spring() }
-): ModifierTransitionHandler<T, Spotlight.TransitionState> = remember {
-    SpotlightFader(transitionSpec = transitionSpec)
+fun <T> rememberSpotlightAdvancedFader(
+    transitionSpec: TransitionSpec<SpotlightAdvanced.TransitionState, Float> = { spring() }
+): ModifierTransitionHandler<T, SpotlightAdvanced.TransitionState> = remember {
+    SpotlightAdvancedFader(transitionSpec = transitionSpec)
 }

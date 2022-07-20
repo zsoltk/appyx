@@ -1,16 +1,16 @@
-package com.bumble.appyx.routingsource.spotlight.backpresshandler
+package com.bumble.appyx.routingsource.spotlightadvanced.backpresshandler
 
 import com.bumble.appyx.core.routing.backpresshandlerstrategies.BaseBackPressHandlerStrategy
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight
-import com.bumble.appyx.routingsource.spotlightadvanced.Spotlight.TransitionState.ACTIVE
-import com.bumble.appyx.routingsource.spotlight.SpotlightElements
-import com.bumble.appyx.routingsource.spotlight.operation.Activate
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvanced.TransitionState.ACTIVE
+import com.bumble.appyx.routingsource.spotlightadvanced.SpotlightAdvancedElements
+import com.bumble.appyx.routingsource.spotlightadvanced.operation.Activate
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class GoToDefault<Routing : Any>(
     private val defaultElementIndex: Int = 0
-) : BaseBackPressHandlerStrategy<Routing, Spotlight.TransitionState>() {
+) : BaseBackPressHandlerStrategy<Routing, SpotlightAdvanced.TransitionState>() {
 
     override val canHandleBackPressFlow: Flow<Boolean> by lazy {
         routingSource.elements.map(::defaultElementIsNotActive)
@@ -20,6 +20,6 @@ class GoToDefault<Routing : Any>(
         routingSource.accept(Activate(defaultElementIndex))
     }
 
-    private fun defaultElementIsNotActive(elements: SpotlightElements<Routing>) =
+    private fun defaultElementIsNotActive(elements: SpotlightAdvancedElements<Routing>) =
         elements.getOrNull(defaultElementIndex)?.targetState != ACTIVE
 }
