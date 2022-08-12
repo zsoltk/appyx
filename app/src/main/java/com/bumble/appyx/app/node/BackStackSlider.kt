@@ -8,7 +8,6 @@ import androidx.compose.animation.core.animateOffset
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -16,32 +15,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.dp
-import com.bumble.appyx.app.ui.md_amber_900
-import com.bumble.appyx.app.ui.md_blue_grey_900
-import com.bumble.appyx.app.ui.md_cyan_500
-import com.bumble.appyx.app.ui.md_cyan_700
-import com.bumble.appyx.app.ui.md_teal_700
-import com.bumble.appyx.routingsource.backstack.BackStack
-import com.bumble.appyx.routingsource.backstack.operation.BackStackOperation
-import com.bumble.appyx.routingsource.backstack.operation.NewRoot
-import com.bumble.appyx.routingsource.backstack.operation.Pop
-import com.bumble.appyx.routingsource.backstack.operation.Push
-import com.bumble.appyx.routingsource.backstack.operation.Remove
-import com.bumble.appyx.routingsource.backstack.operation.Replace
-import com.bumble.appyx.routingsource.backstack.operation.SingleTop.SingleTopReactivateBackStackOperation
-import com.bumble.appyx.routingsource.backstack.operation.SingleTop.SingleTopReplaceBackStackOperation
+import com.bumble.appyx.app.ui.md_light_blue_500
+import com.bumble.appyx.app.ui.md_light_green_500
+import com.bumble.appyx.app.ui.md_purple_500
+import com.bumble.appyx.app.ui.md_red_700
 import com.bumble.appyx.core.routing.transition.ModifierTransitionHandler
 import com.bumble.appyx.core.routing.transition.TransitionDescriptor
 import com.bumble.appyx.core.routing.transition.TransitionSpec
+import com.bumble.appyx.routingsource.backstack.BackStack
 import kotlin.math.roundToInt
 
 @Suppress("TransitionPropertiesLabel")
 class BackStackSlider<T>(
     private val transitionSpec: TransitionSpec<BackStack.TransitionState, Offset> = {
-        spring(stiffness = Spring.StiffnessVeryLow)
+        spring(stiffness = Spring.StiffnessLow / 8)
     },
     override val clipToBounds: Boolean = false
 ) : ModifierTransitionHandler<T, BackStack.TransitionState>() {
@@ -52,7 +40,7 @@ class BackStackSlider<T>(
         descriptor: TransitionDescriptor<T, BackStack.TransitionState>
     ): Modifier = modifier.composed {
         val offset = transition.animateOffset(
-            transitionSpec = { spring(stiffness = 30f) },
+            transitionSpec = { spring(stiffness = Spring.StiffnessLow / 8) },
             targetValueByState = {
                 val width = descriptor.params.bounds.width.value
                 when (it) {
@@ -64,20 +52,20 @@ class BackStackSlider<T>(
             })
 
         val color by transition.animateColor(
-            transitionSpec = { spring(stiffness = 30f) },
+            transitionSpec = { spring(stiffness = Spring.StiffnessLow / 8) },
             label = "",
             targetValueByState = {
                 when (it) {
-                    BackStack.TransitionState.CREATED -> md_cyan_500
-                    BackStack.TransitionState.ACTIVE -> md_blue_grey_900
-                    BackStack.TransitionState.STASHED_IN_BACK_STACK -> md_amber_900
-                    BackStack.TransitionState.DESTROYED -> md_cyan_700
+                    BackStack.TransitionState.CREATED -> md_purple_500
+                    BackStack.TransitionState.ACTIVE -> md_light_blue_500
+                    BackStack.TransitionState.STASHED_IN_BACK_STACK -> md_light_green_500
+                    BackStack.TransitionState.DESTROYED -> md_red_700
                 }
             }
         )
 
         val rotation by transition.animateFloat(
-            transitionSpec = { spring(stiffness = 30f) },
+            transitionSpec = { spring(stiffness = Spring.StiffnessLow / 8) },
             label = "",
             targetValueByState = {
                 when (it) {
@@ -110,7 +98,9 @@ class BackStackSlider<T>(
 
 @Composable
 fun <T> rememberBackstackSlider(
-    transitionSpec: TransitionSpec<BackStack.TransitionState, Offset> = { spring(stiffness = Spring.StiffnessLow) },
+    transitionSpec: TransitionSpec<BackStack.TransitionState, Offset> = {
+        spring(stiffness = Spring.StiffnessLow / 8)
+    },
     clipToBounds: Boolean = false
 ): ModifierTransitionHandler<T, BackStack.TransitionState> = remember {
     BackStackSlider(transitionSpec = transitionSpec, clipToBounds = clipToBounds)
