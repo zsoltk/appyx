@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
+import com.bumble.appyx.app.node.BackStackNode
 import com.bumble.appyx.app.node.root.RootNode
 import com.bumble.appyx.app.ui.AppyxSampleAppTheme
 import com.bumble.appyx.core.integration.NodeHost
@@ -29,7 +30,7 @@ class MainActivity : NodeActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     Column {
                         NodeHost(integrationPoint = integrationPoint) {
-                            RootNode(
+                            BackStackNode(
                                 buildContext = it,
                             )
                         }

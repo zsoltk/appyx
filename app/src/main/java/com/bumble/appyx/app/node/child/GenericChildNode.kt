@@ -13,9 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -102,33 +106,18 @@ class GenericChildNode(
     @Composable
     override fun View(modifier: Modifier) {
         val color by derivedStateOf { colors[colorIndex] }
-
+        val text = remember { "Value: ${Random.nextInt(0, 100)}" }
         Box(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
-                .background(
-                    color = color,
-                    shape = RoundedCornerShape(6.dp)
-                )
-                .clickable {
-                    colorIndex = Random.nextInt(colors.size)
-                }
+                .padding(6.dp)
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(6.dp)
-            ) {
-                Text(
-                    text = "Child ($id)",
-                    style = MaterialTheme.typography.caption
-                )
-                Text(
-                    text = "$counter",
-                    modifier = Modifier.align(Alignment.Center),
-                    fontSize = 40.sp
-                )
-            }
+            Text(
+                text = text,
+                color = Color.Black,
+                modifier = Modifier.align(Alignment.Center),
+                fontSize = 50.sp
+            )
         }
     }
 }
