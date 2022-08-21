@@ -1,8 +1,8 @@
 package com.bumble.appyx.navmodel.maps.operation
 
 import com.bumble.appyx.navmodel.maps.Maps
-import com.bumble.appyx.navmodel.maps.Maps.TransitionState.FULL_SCREEN
-import com.bumble.appyx.navmodel.maps.Maps.TransitionState.MODAL
+import com.bumble.appyx.navmodel.maps.Maps.State.FULL_SCREEN
+import com.bumble.appyx.navmodel.maps.Maps.State.MODAL
 import com.bumble.appyx.navmodel.maps.MapsElements
 import kotlinx.parcelize.Parcelize
 
