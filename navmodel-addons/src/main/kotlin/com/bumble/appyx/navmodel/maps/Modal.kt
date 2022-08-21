@@ -1,4 +1,4 @@
-package com.bumble.appyx.navmodel.modal
+package com.bumble.appyx.navmodel.maps
 
 import com.bumble.appyx.core.navigation.BaseNavModel
 import com.bumble.appyx.core.navigation.Operation.Noop
@@ -9,12 +9,12 @@ import com.bumble.appyx.core.navigation.onscreen.OnScreenStateResolver
 import com.bumble.appyx.core.navigation.operationstrategies.ExecuteImmediately
 import com.bumble.appyx.core.navigation.operationstrategies.OperationStrategy
 import com.bumble.appyx.core.state.SavedStateMap
-import com.bumble.appyx.navmodel.modal.Modal.TransitionState
-import com.bumble.appyx.navmodel.modal.Modal.TransitionState.CREATED
-import com.bumble.appyx.navmodel.modal.Modal.TransitionState.DESTROYED
+import com.bumble.appyx.navmodel.maps.Maps.TransitionState
+import com.bumble.appyx.navmodel.maps.Maps.TransitionState.CREATED
+import com.bumble.appyx.navmodel.maps.Maps.TransitionState.DESTROYED
 import com.bumble.appyx.navmodel.maps.backpresshandler.RevertBackPressHandler
 
-class Modal<Routing : Any>(
+class Maps<Routing : Any>(
     initialElement: Routing,
     savedStateMap: SavedStateMap?,
     key: String = KEY_NAV_MODEL,
@@ -35,7 +35,7 @@ class Modal<Routing : Any>(
     }
 
     override val initialElements: RoutingElements<Routing, TransitionState> = listOf(
-        ModalElement(
+        MapsElement(
             key = RoutingKey(initialElement),
             fromState = CREATED,
             targetState = CREATED,
