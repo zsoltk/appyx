@@ -13,14 +13,13 @@ import com.bumble.appyx.navmodel.maps.Maps.State
 import com.bumble.appyx.navmodel.maps.Maps.State.*
 import com.bumble.appyx.navmodel.maps.backpresshandler.RevertBackPressHandler
 
-class Maps<Routing : Any>(
-    controls: Controls<Routing>,
+class Maps(
     savedStateMap: SavedStateMap?,
     key: String = KEY_NAV_MODEL,
-    backPressHandler: BackPressHandlerStrategy<Routing, State> = RevertBackPressHandler(),
-    operationStrategy: OperationStrategy<Routing, State> = ExecuteImmediately(),
-    screenResolver: OnScreenStateResolver<State> = ModalOnScreenResolver
-) : BaseNavModel<Routing, State>(
+    backPressHandler: BackPressHandlerStrategy<Maps.Target, State> = RevertBackPressHandler(),
+    operationStrategy: OperationStrategy<Maps.Target, State> = ExecuteImmediately(),
+    screenResolver: OnScreenStateResolver<State> = MapsOnScreenResolver
+) : BaseNavModel<Maps.Target, State>(
     savedStateMap = savedStateMap,
     screenResolver = screenResolver,
     operationStrategy = operationStrategy,
@@ -28,13 +27,9 @@ class Maps<Routing : Any>(
     key = key,
     finalState = DESTROYED
 ) {
-    data class Controls<Routing>(
-        val map: Routing,
-        val search: Routing,
-        val categories: Routing,
-        val venueList: Routing,
-        val venueCarousel: Routing,
-    )
+    enum class Target {
+        MAP, SEARCH, FILTERS, CATEGORIES, VENUE_LIST, VENUE_PAGER
+    }
 
     enum class State {
         CREATED,
@@ -45,13 +40,7 @@ class Maps<Routing : Any>(
         DESTROYED
     }
 
-    override val initialElements: RoutingElements<Routing, State> = listOf(
-        controls.map,
-        controls.search,
-        controls.categories,
-        controls.venueList,
-        controls.venueCarousel
-    ).map {
+    override val initialElements: RoutingElements<Target, State> = Target.values().map {
         MapsElement(
             key = RoutingKey(it),
             fromState = CREATED,

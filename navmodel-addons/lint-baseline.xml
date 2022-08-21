@@ -7,7 +7,7 @@
         errorLine1="    override fun createModifier("
         errorLine2="                 ~~~~~~~~~~~~~~">
         <location
-            file="src/main/kotlin/com/bumble/appyx/navmodel/modal/ModalTransitionHandler.kt"
+            file="src/main/kotlin/com/bumble/appyx/navmodel/modal/MapsTransitionHandler.kt"
             line="26"
             column="18"/>
     </issue>

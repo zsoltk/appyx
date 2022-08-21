@@ -12,7 +12,7 @@ import com.bumble.appyx.core.state.SavedStateMap
 import com.bumble.appyx.navmodel.modal.Modal.TransitionState
 import com.bumble.appyx.navmodel.modal.Modal.TransitionState.CREATED
 import com.bumble.appyx.navmodel.modal.Modal.TransitionState.DESTROYED
-import com.bumble.appyx.navmodel.maps.backpresshandler.RevertBackPressHandler
+import com.bumble.appyx.navmodel.modal.backpresshandler.RevertBackPressHandler
 
 class Modal<Routing : Any>(
     initialElement: Routing,

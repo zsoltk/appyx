@@ -5,21 +5,21 @@ import com.bumble.appyx.navmodel.maps.MapsElements
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class VenueListMode<T : Any> : MapsOperation<T> {
+object VenueListMode : MapsOperation {
 
-    override fun isApplicable(elements: MapsElements<T>): Boolean =
+    override fun isApplicable(elements: MapsElements): Boolean =
         true
 
-    override fun invoke(elements: MapsElements<T>): MapsElements<T> {
+    override fun invoke(elements: MapsElements): MapsElements {
         return elements.map {
-                it.transitionTo(
-                    newTargetState = Maps.State.VENUES_LIST,
-                    operation = this
-                )
+            it.transitionTo(
+                newTargetState = Maps.State.VENUES_LIST,
+                operation = this
+            )
         }
     }
 }
 
-fun <T : Any> Maps<T>.venueListMode() {
-    accept(VenueShowMode())
+fun Maps.venueListMode() {
+    accept(VenueListMode)
 }
