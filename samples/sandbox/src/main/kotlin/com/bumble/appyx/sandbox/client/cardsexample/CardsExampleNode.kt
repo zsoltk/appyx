@@ -29,7 +29,27 @@ import kotlinx.parcelize.Parcelize
 class CardsExampleNode(
     buildContext: BuildContext,
     private val cards: Cards<NavTarget> = Cards(
-        initialItems = Profile.allProfiles.shuffled().map {
+        initialItems = listOf(
+            Profile.profile002,
+            Profile.profile2001,
+            Profile.profile1002,
+            Profile.profile3004,
+
+            Profile.profile3001,
+
+            Profile.profile1001,
+            Profile.profile2002,
+//            Profile.profile3002,
+
+//            Profile.profile1003,
+            Profile.profile2003,
+//            Profile.profile3003,
+
+//            Profile.profile001,
+            Profile.profile2004,
+
+
+        ).map {
             NavTarget.ProfileCard(it)
         }
     ),
@@ -40,6 +60,7 @@ class CardsExampleNode(
 
     init {
         lifecycle.coroutineScope.launchWhenStarted {
+            delay(2000)
             repeat(cards.elements.value.size / 4 + 1) {
                 delay(1500)
                 cards.indicateLike()

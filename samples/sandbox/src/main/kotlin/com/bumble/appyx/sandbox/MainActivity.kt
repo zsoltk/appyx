@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.bumble.appyx.core.integration.NodeHost
 import com.bumble.appyx.core.integrationpoint.NodeActivity
 import com.bumble.appyx.core.modality.BuildContext
+import com.bumble.appyx.sandbox.client.cardsexample.CardsExampleNode
 import com.bumble.appyx.sandbox.client.container.ContainerBuilder
 import com.bumble.appyx.sandbox.ui.AppyxSandboxTheme
 
@@ -23,7 +24,7 @@ class MainActivity : NodeActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     Column {
                         NodeHost(integrationPoint = appyxIntegrationPoint) {
-                            ContainerBuilder().build(buildContext = it)
+                            CardsExampleNode(buildContext = it)
                         }
                     }
                 }
