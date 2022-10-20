@@ -47,7 +47,7 @@ fun ProfileCard(
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
-                    .padding(start = 24.dp, bottom = 36.dp)
+                    .padding(start = 24.dp, bottom = 64.dp)
             ) {
                 Text(text = "${profile.name}, ${profile.age}", color = Color.White, fontSize = 30.sp)
                 Spacer(modifier = Modifier.requiredHeight(4.dp))

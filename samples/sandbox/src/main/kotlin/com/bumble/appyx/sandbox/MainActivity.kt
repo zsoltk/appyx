@@ -12,6 +12,7 @@ import com.bumble.appyx.core.integrationpoint.NodeActivity
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.sandbox.client.cardsexample.CardsExampleNode
 import com.bumble.appyx.sandbox.client.container.ContainerBuilder
+import com.bumble.appyx.sandbox.client.spotlightadvancedexample.SpotlightAdvancedExampleNode
 import com.bumble.appyx.sandbox.ui.AppyxSandboxTheme
 
 class MainActivity : NodeActivity() {
@@ -24,7 +25,7 @@ class MainActivity : NodeActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     Column {
                         NodeHost(integrationPoint = appyxIntegrationPoint) {
-                            CardsExampleNode(buildContext = it)
+                            SpotlightAdvancedExampleNode(buildContext = it)
                         }
                     }
                 }

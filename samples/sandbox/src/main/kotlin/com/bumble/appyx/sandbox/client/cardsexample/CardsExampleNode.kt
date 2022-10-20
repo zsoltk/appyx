@@ -1,8 +1,6 @@
 package com.bumble.appyx.sandbox.client.cardsexample
 
 import android.os.Parcelable
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -30,23 +28,23 @@ class CardsExampleNode(
     buildContext: BuildContext,
     private val cards: Cards<NavTarget> = Cards(
         initialItems = listOf(
-            Profile.profile002,
-            Profile.profile2001,
-            Profile.profile1002,
-            Profile.profile3004,
+            Profile.victoria,
+            Profile.matt,
+            Profile.zoe,
+            Profile.sophia,
 
-            Profile.profile3001,
+            Profile.imogen,
 
-            Profile.profile1001,
-            Profile.profile2002,
+            Profile.brittany,
+            Profile.ryan,
 //            Profile.profile3002,
 
 //            Profile.profile1003,
-            Profile.profile2003,
+            Profile.chris,
 //            Profile.profile3003,
 
 //            Profile.profile001,
-            Profile.profile2004,
+            Profile.daniel,
 
 
         ).map {

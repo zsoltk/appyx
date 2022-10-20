@@ -17,85 +17,85 @@ data class Profile(
 ) : Parcelable {
 
     companion object {
-        val profile001 = Profile(
+        val eve = Profile(
             name = "Eve",
             drawable = R.drawable.img_8607
         )
 
-        val profile002 = Profile(
+        val victoria = Profile(
             name = "Victoria",
             drawable = R.drawable.img_9113
         )
 
-        val profile1001 = Profile(
+        val brittany = Profile(
             name = "Brittany",
             drawable = R.drawable.brittany8
         )
 
-        val profile1002 = Profile(
+        val zoe = Profile(
             name = "Zoe",
             drawable = R.drawable.brittany41
         )
 
-        val profile1003 = Profile(
+        val jill = Profile(
             name = "Jill",
             drawable = R.drawable.brittany60
         )
 
-        val profile2001 = Profile(
+        val matt = Profile(
             name = "Matt",
             drawable = R.drawable.matt12
         )
 
-        val profile2002 = Profile(
+        val ryan = Profile(
             name = "Ryan",
             drawable = R.drawable.matt24
         )
 
-        val profile2003 = Profile(
+        val chris = Profile(
             name = "Chris",
             drawable = R.drawable.matt60
         )
 
-        val profile2004 = Profile(
+        val daniel = Profile(
             name = "Daniel",
             drawable = R.drawable.matt88
         )
 
-        val profile3001 = Profile(
+        val imogen = Profile(
             name = "Imogen",
             drawable = R.drawable.imogen15
         )
 
-        val profile3002 = Profile(
+        val heather = Profile(
             name = "Heather",
             drawable = R.drawable.imogen57
         )
 
-        val profile3003 = Profile(
+        val maria = Profile(
             name = "Maria",
             drawable = R.drawable.imogen60
         )
 
-        val profile3004 = Profile(
+        val sophia = Profile(
             name = "Sophia",
             drawable = R.drawable.imogen75
         )
 
         val allProfiles = listOf(
-            profile001,
-            profile002,
-            profile1001,
-            profile1002,
-            profile1003,
-            profile2001,
-            profile2002,
-            profile2003,
-            profile2004,
-            profile3001,
-            profile3002,
-            profile3003,
-            profile3004,
+            eve,
+            victoria,
+            brittany,
+            zoe,
+            jill,
+            matt,
+            ryan,
+            chris,
+            daniel,
+            imogen,
+            heather,
+            maria,
+            sophia,
         )
     }
 }
