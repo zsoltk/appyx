@@ -3,6 +3,9 @@ package com.bumble.appyx.transitionmodel.spotlight.operation
 import androidx.compose.animation.core.AnimationSpec
 import com.bumble.appyx.interactions.Parcelize
 import com.bumble.appyx.interactions.core.BaseOperation
+import com.bumble.appyx.interactions.core.TransitionModel
+import com.bumble.appyx.interactions.core.TransitionModel.OperationMode
+import com.bumble.appyx.interactions.core.TransitionModel.OperationMode.UPDATE
 import com.bumble.appyx.transitionmodel.spotlight.Spotlight
 import com.bumble.appyx.transitionmodel.spotlight.SpotlightModel
 
@@ -22,6 +25,9 @@ class First<NavTarget : Any> : BaseOperation<SpotlightModel.State<NavTarget>>() 
         )
 }
 
-fun <NavTarget : Any> Spotlight<NavTarget>.first(animationSpec: AnimationSpec<Float> = defaultAnimationSpec) {
-    operation(First(), animationSpec)
+fun <NavTarget : Any> Spotlight<NavTarget>.first(
+    animationSpec: AnimationSpec<Float> = defaultAnimationSpec,
+    mode: OperationMode = UPDATE
+) {
+    operation(First(), animationSpec, mode)
 }

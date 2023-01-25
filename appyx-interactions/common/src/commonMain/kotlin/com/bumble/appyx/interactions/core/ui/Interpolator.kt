@@ -3,10 +3,17 @@ package com.bumble.appyx.interactions.core.ui
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.lerp
 import com.bumble.appyx.interactions.core.TransitionModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 interface Interpolator<Target, ModelState> {
 
     fun map(
+        segment: TransitionModel.Segment<ModelState>
+    ): StateFlow<List<FrameModel<Target>>> =
+        MutableStateFlow(mapFrame(segment))
+
+    fun mapFrame(
         segment: TransitionModel.Segment<ModelState>
     ): List<FrameModel<Target>>
 
