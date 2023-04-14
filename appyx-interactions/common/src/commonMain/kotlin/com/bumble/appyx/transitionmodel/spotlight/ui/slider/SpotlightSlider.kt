@@ -17,7 +17,7 @@ import com.bumble.appyx.interactions.core.ui.property.impl.Alpha
 import com.bumble.appyx.interactions.core.ui.property.impl.GenericFloatProperty
 import com.bumble.appyx.interactions.core.ui.property.impl.Position
 import com.bumble.appyx.interactions.core.ui.property.impl.Scale
-import com.bumble.appyx.interactions.core.ui.state.MatchedTargetUiState
+import com.bumble.appyx.interactions.core.ui.state.UiMapping
 import com.bumble.appyx.transitionmodel.BaseMotionController
 import com.bumble.appyx.transitionmodel.spotlight.SpotlightModel.*
 import com.bumble.appyx.transitionmodel.spotlight.SpotlightModel.State.ElementState.CREATED
@@ -58,10 +58,10 @@ class SpotlightSlider<InteractionTarget : Any>(
         alpha = Alpha.Target(0f),
     )
 
-    override fun State<InteractionTarget>.toUiTargets(): List<MatchedTargetUiState<InteractionTarget, TargetUiState>> {
+    override fun State<InteractionTarget>.toUiTargets(): List<UiMapping<InteractionTarget, TargetUiState>> {
         return positions.flatMapIndexed { index, position ->
             position.elements.map {
-                MatchedTargetUiState(
+                UiMapping(
                     element = it.key,
                     targetUiState = TargetUiState(
                         base = when (it.value) {
@@ -77,8 +77,8 @@ class SpotlightSlider<InteractionTarget : Any>(
         }
     }
 
-    override fun mutableUiStateFor(uiContext: UiContext, targetUiState: TargetUiState): MutableUiState =
-        targetUiState.toMutableState(uiContext, scrollX.valueFlow, width)
+    override fun mutableUiStateFor(uiContext: UiContext, uiMapping: UiMapping<*, TargetUiState>): MutableUiState =
+        uiMapping.targetUiState.toMutableState(uiContext, scrollX.valueFlow, width)
 
 
     class Gestures<InteractionTarget>(

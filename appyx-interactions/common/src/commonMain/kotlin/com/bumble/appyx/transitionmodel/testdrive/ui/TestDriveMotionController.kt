@@ -12,7 +12,7 @@ import com.bumble.appyx.interactions.core.ui.gesture.Gesture
 import com.bumble.appyx.interactions.core.ui.gesture.GestureFactory
 import com.bumble.appyx.interactions.core.ui.property.impl.BackgroundColor
 import com.bumble.appyx.interactions.core.ui.property.impl.Position
-import com.bumble.appyx.interactions.core.ui.state.MatchedTargetUiState
+import com.bumble.appyx.interactions.core.ui.state.UiMapping
 import com.bumble.appyx.transitionmodel.BaseMotionController
 import com.bumble.appyx.transitionmodel.testdrive.TestDriveModel
 import com.bumble.appyx.transitionmodel.testdrive.TestDriveModel.State.ElementState.A
@@ -29,9 +29,9 @@ class TestDriveMotionController<InteractionTarget : Any>(
     uiContext = uiContext,
     defaultAnimationSpec = uiAnimationSpec,
 ) {
-    override fun TestDriveModel.State<InteractionTarget>.toUiTargets(): List<MatchedTargetUiState<InteractionTarget, TargetUiState>> =
+    override fun TestDriveModel.State<InteractionTarget>.toUiTargets(): List<UiMapping<InteractionTarget, TargetUiState>> =
         listOf(
-            MatchedTargetUiState(element, elementState.toTargetUiState()).also {
+            UiMapping(element, elementState.toTargetUiState()).also {
                 Logger.log("TestDrive", "Matched $elementState -> UiState: ${it.targetUiState}")
             }
         )
@@ -71,8 +71,15 @@ class TestDriveMotionController<InteractionTarget : Any>(
         )
     }
 
-    override fun mutableUiStateFor(uiContext: UiContext, targetUiState: TargetUiState): MutableUiState =
-        targetUiState.toMutableState(uiContext)
+    override fun mutableUiStateFor(
+        uiContext: UiContext,
+        uiMapping: UiMapping<*, TargetUiState>
+    ): MutableUiState =
+        uiMapping.targetUiState.toMutableState(
+            uiContext = uiContext,
+            element = uiMapping.element,
+            draggable = this.draggable
+        )
 
     class Gestures<InteractionTarget>(
         transitionBounds: TransitionBounds,

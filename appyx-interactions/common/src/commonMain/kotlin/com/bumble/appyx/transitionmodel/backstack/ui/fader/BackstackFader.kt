@@ -4,7 +4,7 @@ import DefaultAnimationSpec
 import androidx.compose.animation.core.SpringSpec
 import com.bumble.appyx.interactions.core.ui.context.UiContext
 import com.bumble.appyx.interactions.core.ui.property.impl.Alpha
-import com.bumble.appyx.interactions.core.ui.state.MatchedTargetUiState
+import com.bumble.appyx.interactions.core.ui.state.UiMapping
 import com.bumble.appyx.transitionmodel.BaseMotionController
 import com.bumble.appyx.transitionmodel.backstack.BackStackModel
 
@@ -23,13 +23,13 @@ class BackstackFader<InteractionTarget : Any>(
         alpha = Alpha.Target( 0f)
     )
 
-    override fun BackStackModel.State<InteractionTarget>.toUiTargets(): List<MatchedTargetUiState<InteractionTarget, TargetUiState>> =
+    override fun BackStackModel.State<InteractionTarget>.toUiTargets(): List<UiMapping<InteractionTarget, TargetUiState>> =
         listOf(
-            MatchedTargetUiState(active, visible)
+            UiMapping(active, visible)
         ) + (created + stashed + destroyed).map {
-            MatchedTargetUiState(it, hidden)
+            UiMapping(it, hidden)
         }
 
-    override fun mutableUiStateFor(uiContext: UiContext, targetUiState: TargetUiState): MutableUiState =
-        targetUiState.toMutableState(uiContext)
+    override fun mutableUiStateFor(uiContext: UiContext, uiMapping: UiMapping<*, TargetUiState>): MutableUiState =
+        uiMapping.targetUiState.toMutableState(uiContext)
 }

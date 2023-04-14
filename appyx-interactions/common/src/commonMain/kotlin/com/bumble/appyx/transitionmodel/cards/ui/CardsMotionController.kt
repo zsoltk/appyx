@@ -16,7 +16,7 @@ import com.bumble.appyx.interactions.core.ui.property.impl.Position
 import com.bumble.appyx.interactions.core.ui.property.impl.RotationZ
 import com.bumble.appyx.interactions.core.ui.property.impl.Scale
 import com.bumble.appyx.interactions.core.ui.property.impl.ZIndex
-import com.bumble.appyx.interactions.core.ui.state.MatchedTargetUiState
+import com.bumble.appyx.interactions.core.ui.state.UiMapping
 import com.bumble.appyx.transitionmodel.BaseMotionController
 import com.bumble.appyx.transitionmodel.cards.CardsModel
 import com.bumble.appyx.transitionmodel.cards.CardsModel.State.Card.InvisibleCard.VotedCard.VOTED_CARD_STATE.LIKED
@@ -67,30 +67,30 @@ class CardsMotionController<InteractionTarget : Any>(
         rotationZ = RotationZ.Target(45f)
     )
 
-    override fun CardsModel.State<InteractionTarget>.toUiTargets(): List<MatchedTargetUiState<InteractionTarget, TargetUiState>> {
-        val result = mutableListOf<MatchedTargetUiState<InteractionTarget, TargetUiState>>()
+    override fun CardsModel.State<InteractionTarget>.toUiTargets(): List<UiMapping<InteractionTarget, TargetUiState>> {
+        val result = mutableListOf<UiMapping<InteractionTarget, TargetUiState>>()
         (votedCards + visibleCards + queued).map {
             when (it) {
                 is CardsModel.State.Card.InvisibleCard.VotedCard -> {
                     result.add(
                         if (it.votedCardState == LIKED) {
-                            MatchedTargetUiState(it.element, voteLike)
+                            UiMapping(it.element, voteLike)
                         } else {
-                            MatchedTargetUiState(it.element, votePass)
+                            UiMapping(it.element, votePass)
                         }
                     )
                 }
 
                 is CardsModel.State.Card.VisibleCard.TopCard -> {
-                    result.add(MatchedTargetUiState(it.element, top))
+                    result.add(UiMapping(it.element, top))
                 }
 
                 is CardsModel.State.Card.VisibleCard.BottomCard -> {
-                    result.add(MatchedTargetUiState(it.element, bottom))
+                    result.add(UiMapping(it.element, bottom))
                 }
 
                 is CardsModel.State.Card.InvisibleCard.Queued -> {
-                    result.add(MatchedTargetUiState(it.element, hidden))
+                    result.add(UiMapping(it.element, hidden))
                 }
             }
         }
@@ -98,9 +98,8 @@ class CardsMotionController<InteractionTarget : Any>(
         return result
     }
 
-    override fun mutableUiStateFor(uiContext: UiContext, targetUiState: TargetUiState): MutableUiState =
-        targetUiState.toMutableState(uiContext)
-
+    override fun mutableUiStateFor(uiContext: UiContext, uiMapping: UiMapping<*, TargetUiState>): MutableUiState =
+        uiMapping.targetUiState.toMutableState(uiContext)
 
     class Gestures<InteractionTarget>(
         transitionBounds: TransitionBounds

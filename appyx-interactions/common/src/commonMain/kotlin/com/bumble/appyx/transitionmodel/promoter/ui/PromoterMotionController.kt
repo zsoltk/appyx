@@ -5,7 +5,7 @@ import androidx.compose.animation.core.SpringSpec
 import androidx.compose.ui.unit.Dp
 import com.bumble.appyx.interactions.core.ui.*
 import com.bumble.appyx.interactions.core.ui.context.UiContext
-import com.bumble.appyx.interactions.core.ui.state.MatchedTargetUiState
+import com.bumble.appyx.interactions.core.ui.state.UiMapping
 import com.bumble.appyx.transitionmodel.BaseMotionController
 import com.bumble.appyx.transitionmodel.cards.ui.MutableUiState
 import com.bumble.appyx.transitionmodel.cards.ui.TargetUiState
@@ -20,13 +20,13 @@ class PromoterMotionController<InteractionTarget : Any>(
     uiContext = uiContext,
     defaultAnimationSpec = uiAnimationSpec,
 ) {
-    override fun PromoterModel.State<InteractionTarget>.toUiTargets(): List<MatchedTargetUiState<InteractionTarget, TargetUiState>> {
+    override fun PromoterModel.State<InteractionTarget>.toUiTargets(): List<UiMapping<InteractionTarget, TargetUiState>> {
         TODO("Not yet implemented")
     }
 
     override fun mutableUiStateFor(
         uiContext: UiContext,
-        targetUiState: TargetUiState
+        uiMapping: UiMapping<*, TargetUiState>
     ): MutableUiState {
         TODO("Not yet implemented")
     }

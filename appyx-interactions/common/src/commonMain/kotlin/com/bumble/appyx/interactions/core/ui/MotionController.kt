@@ -3,6 +3,8 @@ package com.bumble.appyx.interactions.core.ui
 import androidx.compose.animation.core.SpringSpec
 import com.bumble.appyx.interactions.core.model.transition.Keyframes
 import com.bumble.appyx.interactions.core.Element
+import com.bumble.appyx.interactions.core.model.BaseInteractionModel
+import com.bumble.appyx.interactions.core.model.progress.Draggable
 import com.bumble.appyx.interactions.core.model.transition.Segment
 import com.bumble.appyx.interactions.core.model.transition.TransitionModel
 import com.bumble.appyx.interactions.core.model.transition.Update
@@ -13,9 +15,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 
-interface MotionController<InteractionTarget, ModelState> {
+interface MotionController<InteractionTarget : Any, ModelState> {
 
     val finishedAnimations: Flow<Element<InteractionTarget>>
+
+    fun init(
+        draggable: Draggable
+    )
 
     fun overrideAnimationSpec(springSpec: SpringSpec<Float>) {
         // TODO remove default once all implementations have been migrated to BaseMotionController
