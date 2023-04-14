@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.dp
 import com.bumble.appyx.interactions.Logger
 import com.bumble.appyx.interactions.core.ui.context.TransitionBounds
 import com.bumble.appyx.interactions.core.ui.context.UiContext
+import com.bumble.appyx.interactions.core.ui.gesture.DraggableMapping
 import com.bumble.appyx.interactions.core.ui.gesture.Gesture
 import com.bumble.appyx.interactions.core.ui.gesture.GestureFactory
 import com.bumble.appyx.interactions.core.ui.property.impl.BackgroundColor
@@ -76,9 +77,7 @@ class TestDriveMotionController<InteractionTarget : Any>(
         uiMapping: UiMapping<*, TargetUiState>
     ): MutableUiState =
         uiMapping.targetUiState.toMutableState(
-            uiContext = uiContext,
-            element = uiMapping.element,
-            draggable = this.draggable
+            uiContext = uiContext
         )
 
     class Gestures<InteractionTarget>(

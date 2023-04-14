@@ -1,9 +1,15 @@
 package com.bumble.appyx.interactions.core.ui.state
 
 import androidx.compose.animation.core.SpringSpec
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import com.bumble.appyx.combineState
+import com.bumble.appyx.interactions.Logger
+import com.bumble.appyx.interactions.core.Element
+import com.bumble.appyx.interactions.core.model.progress.Draggable
 import com.bumble.appyx.interactions.core.ui.context.UiContext
+import com.bumble.appyx.interactions.core.ui.gesture.DraggableMapping
 import com.bumble.appyx.interactions.core.ui.property.MotionProperty
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -15,6 +21,8 @@ abstract class BaseMutableUiState<MutableUiState, TargetUiState>(
     val motionProperties: List<MotionProperty<*, *>>
 ) {
     abstract val modifier: Modifier
+
+    protected var draggableMapping: DraggableMapping<*>? = null
 
     val isAnimating: Flow<Boolean>
         get() = combine(motionProperties.map { it.isAnimating }) { booleanArray ->
@@ -46,4 +54,26 @@ abstract class BaseMutableUiState<MutableUiState, TargetUiState>(
         target: TargetUiState,
         springSpec: SpringSpec<Float>,
     )
+
+    fun makeDraggable(element: Element<*>, draggable: Draggable) {
+        this.draggableMapping = DraggableMapping(element, draggable)
+    }
+
+    protected fun Modifier.dragGestures(): Modifier =
+        apply {
+            draggableMapping?.let {
+                pointerInput(it.element.id) {
+                    detectDragGestures(
+                        onDrag = { change, dragAmount ->
+                            change.consume()
+                            it.draggable.onDrag(dragAmount, this)
+                        },
+                        onDragEnd = {
+                            Logger.log("drag", "end")
+                            it.draggable.onDragEnd()
+                        }
+                    )
+                }
+            }
+        }
 }

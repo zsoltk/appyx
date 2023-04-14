@@ -28,6 +28,7 @@ class MutableUiState(
     override val modifier: Modifier
         get() = Modifier.then(scale.modifier)
             .then(position.modifier)
+            .dragGestures()
             .then(rotationZ.modifier)
             .then(zIndex.modifier)
 

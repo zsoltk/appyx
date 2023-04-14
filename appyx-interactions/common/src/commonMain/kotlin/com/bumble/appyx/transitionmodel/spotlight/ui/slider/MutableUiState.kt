@@ -29,6 +29,7 @@ class MutableUiState(
         get() = Modifier.then(position.modifier)
             .then(alpha.modifier)
             .then(scale.modifier)
+            .dragGestures()
 
     override suspend fun snapTo(scope: CoroutineScope, target: TargetUiState) {
         scope.launch {

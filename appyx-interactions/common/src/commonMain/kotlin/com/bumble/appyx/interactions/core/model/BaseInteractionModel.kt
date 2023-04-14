@@ -174,6 +174,7 @@ open class BaseInteractionModel<InteractionTarget : Any, ModelState : Any>(
     }
 
     private fun onMotionControllerReady(motionController: MotionController<InteractionTarget, ModelState>) {
+        motionController.init(this)
         observeAnimationChanges(motionController)
         observeMotionController(motionController)
     }

@@ -16,6 +16,7 @@ import com.bumble.appyx.interactions.core.model.transition.Segment
 import com.bumble.appyx.interactions.core.model.transition.Update
 import com.bumble.appyx.interactions.core.ui.MotionController
 import com.bumble.appyx.interactions.core.ui.context.UiContext
+import com.bumble.appyx.interactions.core.ui.gesture.DraggableMapping
 import com.bumble.appyx.interactions.core.ui.math.lerpFloat
 import com.bumble.appyx.interactions.core.ui.output.ElementUiModel
 import com.bumble.appyx.interactions.core.ui.property.MotionProperty
@@ -85,6 +86,11 @@ abstract class BaseMotionController<InteractionTarget : Any, ModelState, Mutable
         uiMapping: UiMapping<*, TargetUiState>
     ): MutableUiState
 
+    private fun draggableMutableUiStateFor(uiContext: UiContext, uiMapping: UiMapping<*, TargetUiState>): MutableUiState =
+        mutableUiStateFor(uiContext, uiMapping).apply {
+            makeDraggable(uiMapping.element, draggable)
+        }
+
     override fun mapUpdate(
         update: Update<ModelState>
     ): List<ElementUiModel<InteractionTarget>> {
@@ -97,7 +103,7 @@ abstract class BaseMotionController<InteractionTarget : Any, ModelState, Mutable
         // TODO: use a map instead of find
         return matchedTargetUiStates.map { t1 ->
             val mutableUiState = mutableUiStateCache.getOrPut(t1.element.id) {
-                mutableUiStateFor(uiContext, t1)
+                draggableMutableUiStateFor(uiContext, t1)
             }
             ElementUiModel(
                 element = t1.element,
@@ -210,7 +216,7 @@ abstract class BaseMotionController<InteractionTarget : Any, ModelState, Mutable
         return toTargetUiState.map { t1 ->
             val t0 = fromTargetUiState.find { it.element.id == t1.element.id }!!
             val mutableUiState = mutableUiStateCache.getOrPut(t1.element.id) {
-                mutableUiStateFor(uiContext, t0)
+                draggableMutableUiStateFor(uiContext, t0)
             }
             // Synchronously, immediately apply current interpolated value before the new mutable state
             // reaches composition. This is to avoid jumping between default & current value.

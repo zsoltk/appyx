@@ -19,8 +19,6 @@ import kotlinx.coroutines.launch
 
 class MutableUiState(
     uiContext: UiContext,
-    private val draggable: Draggable,
-    private val element: Element<*>,
     private val position: Position,
     private val backgroundColor: BackgroundColor,
 ) : BaseMutableUiState<MutableUiState, TargetUiState>(
@@ -31,18 +29,7 @@ class MutableUiState(
     override val modifier: Modifier
         get() = Modifier.then(position.modifier)
             .then(backgroundColor.modifier)
-            .pointerInput(element.id) {
-                detectDragGestures(
-                    onDrag = { change, dragAmount ->
-                        change.consume()
-                        draggable.onDrag(dragAmount, this)
-                    },
-                    onDragEnd = {
-                        Logger.log("drag", "end")
-                        draggable.onDragEnd()
-                    }
-                )
-            }
+            .dragGestures()
 
     override suspend fun snapTo(scope: CoroutineScope, target: TargetUiState) {
         scope.launch {
