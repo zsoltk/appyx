@@ -1,4 +1,4 @@
-package com.bumble.appyx.demos.sample1
+package com.bumble.appyx.demos.sample2
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
@@ -36,7 +36,8 @@ import com.bumble.appyx.components.internal.testdrive.TestDriveModel.State.Eleme
 import com.bumble.appyx.components.internal.testdrive.TestDriveModel.State.ElementState.C
 import com.bumble.appyx.components.internal.testdrive.TestDriveModel.State.ElementState.D
 import com.bumble.appyx.components.internal.testdrive.operation.next
-import com.bumble.appyx.demos.sample1.InteractionTarget.Child1
+import com.bumble.appyx.demos.sample2.InteractionTarget
+import com.bumble.appyx.demos.sample2.InteractionTarget.Child1
 import com.bumble.appyx.interactions.core.model.transition.Operation.Mode.IMMEDIATE
 import com.bumble.appyx.interactions.core.ui.helper.InteractionModelSetup
 import com.bumble.appyx.interactions.sample.Children
@@ -46,7 +47,7 @@ enum class InteractionTarget {
 }
 
 @Composable
-fun Sample1(
+fun Sample2(
     screenWidthPx: Int,
     screenHeightPx: Int,
     modifier: Modifier = Modifier,
@@ -57,8 +58,8 @@ fun Sample1(
         TestDrive(
             scope = coroutineScope,
             model = model,
-            motionController = { Sample1MotionController(it) },
-            gestureFactory = { Sample1MotionController.Gestures(it) }
+            motionController = { Sample2MotionController(it) },
+            gestureFactory = { Sample2MotionController.Gestures(it) }
         )
     }
 
@@ -187,7 +188,7 @@ private fun Controls(
                 .clickable {
                     testDrive.next(
                         mode = IMMEDIATE, animationSpec = spring(
-                            stiffness = Spring.StiffnessMedium,
+                            stiffness = Spring.StiffnessLow,
                             dampingRatio = Spring.DampingRatioLowBouncy,
                         )
                     )

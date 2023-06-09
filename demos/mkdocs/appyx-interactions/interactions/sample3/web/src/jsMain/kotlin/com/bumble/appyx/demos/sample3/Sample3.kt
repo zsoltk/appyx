@@ -1,26 +1,34 @@
-package com.bumble.appyx.demos.sample1
+package com.bumble.appyx.demos.sample3
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.LinearGradientShader
@@ -36,8 +44,12 @@ import com.bumble.appyx.components.internal.testdrive.TestDriveModel.State.Eleme
 import com.bumble.appyx.components.internal.testdrive.TestDriveModel.State.ElementState.C
 import com.bumble.appyx.components.internal.testdrive.TestDriveModel.State.ElementState.D
 import com.bumble.appyx.components.internal.testdrive.operation.next
-import com.bumble.appyx.demos.sample1.InteractionTarget.Child1
+import com.bumble.appyx.demos.sample3.InteractionTarget.Child1
+import com.bumble.appyx.demos.sample3.Sample3MotionController.Companion.toTargetUiState
+import com.bumble.appyx.interactions.core.model.transition.Keyframes
 import com.bumble.appyx.interactions.core.model.transition.Operation.Mode.IMMEDIATE
+import com.bumble.appyx.interactions.core.model.transition.Operation.Mode.KEYFRAME
+import com.bumble.appyx.interactions.core.model.transition.Update
 import com.bumble.appyx.interactions.core.ui.helper.InteractionModelSetup
 import com.bumble.appyx.interactions.sample.Children
 
@@ -46,7 +58,7 @@ enum class InteractionTarget {
 }
 
 @Composable
-fun Sample1(
+fun Sample3(
     screenWidthPx: Int,
     screenHeightPx: Int,
     modifier: Modifier = Modifier,
@@ -57,12 +69,27 @@ fun Sample1(
         TestDrive(
             scope = coroutineScope,
             model = model,
-            motionController = { Sample1MotionController(it) },
-            gestureFactory = { Sample1MotionController.Gestures(it) }
+            progressAnimationSpec = spring(
+                stiffness = Spring.StiffnessVeryLow / 10,
+                visibilityThreshold = 0.001f
+            ),
+            motionController = { Sample3MotionController(it) },
+            gestureFactory = { Sample3MotionController.Gestures(it) }
         )
     }
 
     InteractionModelSetup(testDrive)
+
+    val output = model.output.collectAsState().value
+    val currentTarget: State<TestDriveModel.State<InteractionTarget>?> =
+        when (output) {
+            is Keyframes -> output.currentSegmentTargetStateFlow.collectAsState(null)
+            is Update -> remember(output) { mutableStateOf(output.currentTargetState) }
+        }
+    val index = when (output) {
+        is Keyframes -> output.currentIndex
+        is Update -> null
+    }
 
     Box(
         modifier = modifier,
@@ -70,11 +97,15 @@ fun Sample1(
         Background(
             screenWidthPx = screenWidthPx,
             screenHeightPx = screenHeightPx,
-            model = model
+            currentTarget = currentTarget.value
         )
         Box(
             modifier = Modifier.padding(24.dp, 24.dp)
         ) {
+            Target(
+                currentTarget = currentTarget.value,
+                index = index
+            )
             ModelUi(
                 screenWidthPx = screenWidthPx,
                 screenHeightPx = screenHeightPx,
@@ -92,18 +123,18 @@ fun Sample1(
 fun <InteractionTarget : Any> Background(
     screenWidthPx: Int,
     screenHeightPx: Int,
-    model: TestDriveModel<InteractionTarget>,
+    currentTarget: TestDriveModel.State<InteractionTarget>?,
     modifier: Modifier = Modifier.fillMaxSize()
 ) {
-    val output = model.output.collectAsState()
-    val currentTarget = output.value.currentTargetState.elementState
     val backgroundColor1 = animateColorAsState(
-        when (currentTarget) {
+        when (currentTarget?.elementState) {
             A -> color_neutral1
             B -> color_neutral2
             C -> color_neutral3
             D -> color_neutral4
-        }
+            null -> color_bright
+        },
+        animationSpec = spring(stiffness = Spring.StiffnessVeryLow)
     )
 
     Box(
@@ -119,6 +150,31 @@ fun <InteractionTarget : Any> Background(
                 )
             )
     )
+}
+
+@Composable
+fun <InteractionTarget : Any> Target(
+    currentTarget: TestDriveModel.State<InteractionTarget>?,
+    index: Int?,
+    modifier: Modifier = Modifier
+) {
+    val targetUiState = currentTarget?.elementState?.toTargetUiState()
+    targetUiState?.let {
+        Box(
+            modifier = modifier
+                .size(60.dp)
+                .offset(targetUiState.position.value.x, targetUiState.position.value.y)
+                .alpha(0.35f)
+                .background(targetUiState.backgroundColor.value)
+        ) {
+            Text(
+                modifier = Modifier.align(Alignment.Center),
+                text = index?.toString() ?: "X",
+                fontSize = 24.sp,
+                color = Color.White
+            )
+        }
+    }
 }
 
 @Composable
@@ -149,6 +205,7 @@ fun <InteractionTarget : Any> ModelUi(
         Box(
             modifier = Modifier.size(60.dp)
                 .then(elementUiModel.modifier)
+//                    .clip(RoundedCornerShape(15))
                 .pointerInput(elementUiModel.element.id) {
                     detectDragGestures(
                         onDrag = { change, dragAmount ->
@@ -181,20 +238,28 @@ private fun Controls(
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = CenterHorizontally
     ) {
-        Box(
-            modifier = Modifier
-                .background(color_primary, shape = RoundedCornerShape(4.dp))
-                .clickable {
-                    testDrive.next(
-                        mode = IMMEDIATE, animationSpec = spring(
-                            stiffness = Spring.StiffnessMedium,
-                            dampingRatio = Spring.DampingRatioLowBouncy,
-                        )
-                    )
-                }
-                .padding(horizontal = 18.dp, vertical = 9.dp)
-        ) {
-            Text("Next")
+        Row {
+            Box(
+                modifier = Modifier
+                    .background(color_primary, shape = RoundedCornerShape(4.dp))
+                    .clickable { testDrive.next(mode = KEYFRAME) }
+                    .padding(horizontal = 18.dp, vertical = 9.dp)
+            ) {
+                Text("Keyframe")
+            }
+            Spacer(Modifier.width(16.dp))
+            Box(
+                modifier = Modifier
+                    .background(color_primary, shape = RoundedCornerShape(4.dp))
+                    .clickable { testDrive.next(mode = IMMEDIATE, spring(
+                        stiffness = Spring.StiffnessVeryLow,
+                        dampingRatio = Spring.DampingRatioMediumBouncy
+                    )) }
+                    .padding(horizontal = 18.dp, vertical = 9.dp)
+            ) {
+                Text("Immediate")
+            }
         }
+
     }
 }

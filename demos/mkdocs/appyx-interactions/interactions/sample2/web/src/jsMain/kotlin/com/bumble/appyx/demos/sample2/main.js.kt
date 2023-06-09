@@ -1,4 +1,4 @@
-package com.bumble.appyx.demos.sample1
+package com.bumble.appyx.demos.sample2
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -38,7 +38,7 @@ fun main() {
                     .onSizeChanged { size = it }
             ) {
                 if (size != IntSize.Zero) {
-                    Sample1(
+                    Sample2(
                         screenWidthPx = size.width,
                         screenHeightPx = size.height,
                         modifier = Modifier

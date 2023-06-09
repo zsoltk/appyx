@@ -29,6 +29,7 @@ import com.bumble.appyx.components.spotlight.operation.updateElements
 import com.bumble.appyx.components.spotlight.ui.slider.SpotlightSlider
 import com.bumble.appyx.interactions.AppyxLogger
 import com.bumble.appyx.interactions.core.ui.gesture.GestureSettleConfig
+import com.bumble.appyx.interactions.core.model.transition.Operation
 import com.bumble.appyx.interactions.core.ui.context.UiContext
 import com.bumble.appyx.interactions.core.ui.helper.InteractionModelSetup
 import com.bumble.appyx.interactions.sample.android.SampleChildren
@@ -76,7 +77,7 @@ fun SpotlightExperiment(
         ),
         motionController = motionController,
         gestureFactory = { SpotlightSlider.Gestures(it, orientation, reverseOrientation) },
-        animationSpec = spring(stiffness = Spring.StiffnessVeryLow / 4),
+        animationSpec = spring(stiffness = Spring.StiffnessVeryLow / 40),
         gestureSettleConfig = GestureSettleConfig(
             completionThreshold = 0.2f,
             completeGestureSpec = spring(),
@@ -111,17 +112,18 @@ fun SpotlightExperiment(
             }) {
                 Text("New")
             }
-            Button(onClick = { spotlight.first() }) {
+            Button(onClick = { spotlight.first(animationSpec = spring(stiffness = Spring.StiffnessVeryLow / 20)) }) {
                 Text("First")
             }
-            Button(onClick = { spotlight.previous() }) {
+            Button(onClick = { spotlight.previous(animationSpec = spring(stiffness = Spring.StiffnessVeryLow / 20)) }) {
                 Text("Prev")
             }
-            Button(onClick = { spotlight.next() }) {
+            Button(onClick = { spotlight.next(animationSpec = spring(stiffness = Spring.StiffnessVeryLow / 20)) }) {
                 Text("Next")
             }
-            Button(onClick = { spotlight.last() }) {
-                Text("Last")
+            Button(onClick = {
+                spotlight.last(mode = Operation.Mode.KEYFRAME, animationSpec = spring(stiffness = Spring.StiffnessVeryLow / 20)) }) {
+                Text("Last QQQ")
             }
         }
     }

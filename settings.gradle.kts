@@ -44,6 +44,8 @@ include(
     ":demos:common",
     ":demos:navigation-compose",
     ":demos:mkdocs:appyx-interactions:interactions:sample1:web",
+    ":demos:mkdocs:appyx-interactions:interactions:sample2:web",
+    ":demos:mkdocs:appyx-interactions:interactions:sample3:web",
     ":ksp:mutable-ui-processor",
     ":utils:customisations",
     ":utils:interop-ribs",
