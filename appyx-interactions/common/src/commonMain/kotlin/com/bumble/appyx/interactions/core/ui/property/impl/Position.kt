@@ -39,7 +39,7 @@ class Position(
     object Alignment {
 
         @Stable
-        val TopStart = BiasAlignment(-1f, -1f)
+        val TopStart = BiasAlignment(-2f, -1f)
         @Stable
         val TopCenter = BiasAlignment(0f, -1f)
         @Stable

@@ -15,35 +15,119 @@ import com.bumble.appyx.components.experimental.cards.android.DatingCards
 import com.bumble.appyx.components.experimental.puzzle15.android.Puzzle15
 import com.bumble.appyx.components.internal.testdrive.android.TestDriveExperiment
 import com.bumble.appyx.components.spotlight.ui.sliderrotation.SpotlightSliderRotation
+import com.bumble.appyx.interactions.bottomnav.NavBarItems.CARDS
+import com.bumble.appyx.interactions.bottomnav.NavBarItems.PUZZLE
+import com.bumble.appyx.interactions.bottomnav.NavBarItems.SPOTLIGHT
+import com.bumble.appyx.interactions.bottomnav.NavBarItems.TEST_DRIVE
 import com.bumble.appyx.interactions.sample.SpotlightExperiment
 
-val appyxBottomNavItems = listOf(
-    AppyxBottomNavItem(
-        text = "Cards",
-        unselectedIcon = Outlined.Style,
-        selectedIcon = Filled.Style,
-        iconModifier = Modifier.rotate(180f),
-        content = { DatingCards() }
-    ),
 
-    AppyxBottomNavItem(
-        text = "Spotlight",
-        unselectedIcon = Outlined.ViewCarousel,
-        selectedIcon = Filled.ViewCarousel,
-        content = { SpotlightExperiment { SpotlightSliderRotation(it) } }
-    ),
+enum class NavBarItems {
+    CARDS, SPOTLIGHT, TEST_DRIVE, PUZZLE
+}
 
-    AppyxBottomNavItem(
-        text = "TestDrive",
-        unselectedIcon = Outlined.GridView,
-        selectedIcon = Filled.GridViewCustom,
-        content = { TestDriveExperiment() }
-    ),
+val navConfig = AppyxTabNavConfig(
+    NavBarItems.values().toList()
+) {
+    when (it) {
+        CARDS -> AppyxNavItemQ(
+            text = "Cards",
+            unselectedIcon = Outlined.Style,
+            selectedIcon = Filled.Style,
+            iconModifier = Modifier.rotate(180f),
+            content = { DatingCards() }
+        )
 
-    AppyxBottomNavItem(
-        text = "Puzzle",
-        unselectedIcon = Outlined.Extension,
-        selectedIcon = Filled.Extension,
-        content = { Puzzle15() }
-    ),
-)
+        SPOTLIGHT -> AppyxNavItemQ(
+            text = "Spotlight",
+            unselectedIcon = Outlined.ViewCarousel,
+            selectedIcon = Filled.ViewCarousel,
+            content = { SpotlightExperiment { SpotlightSliderRotation(it) } }
+        )
+
+        TEST_DRIVE -> AppyxNavItemQ(
+            text = "TestDrive",
+            unselectedIcon = Outlined.GridView,
+            selectedIcon = Filled.GridViewCustom,
+            content = { TestDriveExperiment() }
+        )
+
+        PUZZLE -> AppyxNavItemQ(
+            text = "Puzzle",
+            unselectedIcon = Outlined.Extension,
+            selectedIcon = Filled.Extension,
+            content = { Puzzle15() }
+        )
+    }
+}
+
+//sealed class MainNavItems : AbstractAppyxNavItem() {
+//
+//    class Cards : MainNavItems() {
+//        override val appyxNavItem = AppyxNavItem.from(
+//            text = "Cards",
+//            unselectedIcon = Outlined.Style,
+//            selectedIcon = Filled.Style,
+//            iconModifier = Modifier.rotate(180f),
+//            content = { DatingCards() }
+//        )
+//    }
+//
+//    class Spotlight : MainNavItems() {
+//        override val appyxNavItem: AppyxNavItem = AppyxNavItem.from(
+//            text = "Spotlight",
+//            unselectedIcon = Outlined.ViewCarousel,
+//            selectedIcon = Filled.ViewCarousel,
+//            content = { SpotlightExperiment { SpotlightSliderRotation(it) } }
+//        )
+//    }
+//
+//    class TestDrive : MainNavItems() {
+//        override val appyxNavItem: AppyxNavItem = AppyxNavItem.from(
+//            text = "TestDrive",
+//            unselectedIcon = Outlined.GridView,
+//            selectedIcon = Filled.GridViewCustom,
+//            content = { TestDriveExperiment() }
+//        )
+//    }
+//
+//    class Puzzle : MainNavItems() {
+//        override val appyxNavItem: AppyxNavItem = AppyxNavItem.from(
+//            text = "Puzzle",
+//            unselectedIcon = Outlined.Extension,
+//            selectedIcon = Filled.Extension,
+//            content = { Puzzle15() }
+//        )
+//    }
+//}
+//
+//val appyxNavItems = listOf(
+//    AppyxNavItemQ(
+//        text = "Cards",
+//        unselectedIcon = Outlined.Style,
+//        selectedIcon = Filled.Style,
+//        iconModifier = Modifier.rotate(180f),
+//        content = { DatingCards() }
+//    ),
+//
+//    AppyxNavItemQ(
+//        text = "Spotlight",
+//        unselectedIcon = Outlined.ViewCarousel,
+//        selectedIcon = Filled.ViewCarousel,
+//        content = { SpotlightExperiment { SpotlightSliderRotation(it) } }
+//    ),
+//
+//    AppyxNavItemQ(
+//        text = "TestDrive",
+//        unselectedIcon = Outlined.GridView,
+//        selectedIcon = Filled.GridViewCustom,
+//        content = { TestDriveExperiment() }
+//    ),
+//
+//    AppyxNavItemQ(
+//        text = "Puzzle",
+//        unselectedIcon = Outlined.Extension,
+//        selectedIcon = Filled.Extension,
+//        content = { Puzzle15() }
+//    ),
+//)
