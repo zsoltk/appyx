@@ -25,7 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumble.appyx.demos.common.InteractionTarget.Element
-import com.bumble.appyx.interactions.core.DraggableAppyxComponent
+import com.bumble.appyx.interactions.core.AppyxComponent
 import com.bumble.appyx.interactions.core.model.BaseAppyxComponent
 import com.bumble.appyx.interactions.core.ui.helper.AppyxComponentSetup
 import com.bumble.appyx.interactions.core.ui.output.ElementUiModel
@@ -46,14 +46,15 @@ enum class ChildSize {
     MAX,
 }
 
+@Suppress("UnstableCollections") // actions parameter
 @Composable
 fun <InteractionTarget : Any, ModelState : Any> AppyxWebSample(
     screenWidthPx: Int,
     screenHeightPx: Int,
     appyxComponent: BaseAppyxComponent<InteractionTarget, ModelState>,
     actions: Map<String, () -> Unit>,
-    childSize: ChildSize = ChildSize.SMALL,
     modifier: Modifier = Modifier,
+    childSize: ChildSize = ChildSize.SMALL,
     element: @Composable (ElementUiModel<InteractionTarget>) -> Unit = {
         ModalUi(
             elementUiModel = it,
@@ -84,7 +85,7 @@ fun <InteractionTarget : Any, ModelState : Any> AppyxWebSample(
                     }
                 )
             ) {
-                DraggableAppyxComponent(
+                AppyxComponent(
                     appyxComponent = appyxComponent,
                     screenWidthPx = screenWidthPx,
                     screenHeightPx = screenHeightPx,

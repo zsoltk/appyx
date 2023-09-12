@@ -25,7 +25,7 @@ import com.bumble.appyx.components.experimental.promoter.Promoter
 import com.bumble.appyx.components.experimental.promoter.PromoterModel
 import com.bumble.appyx.components.experimental.promoter.operation.addFirst
 import com.bumble.appyx.components.experimental.promoter.ui.PromoterMotionController
-import com.bumble.appyx.interactions.core.DraggableAppyxComponent
+import com.bumble.appyx.interactions.core.AppyxComponent
 import com.bumble.appyx.interactions.core.model.transition.Operation.Mode.IMMEDIATE
 import com.bumble.appyx.interactions.core.model.transition.Operation.Mode.KEYFRAME
 import com.bumble.appyx.interactions.core.ui.helper.AppyxComponentSetup
@@ -38,9 +38,10 @@ import com.bumble.appyx.interactions.sample.android.Element
 import kotlin.math.roundToInt
 
 
+@Suppress("MagicNumber", "LongMethod")
 @ExperimentalMaterialApi
 @Composable
-fun PromoterExperiment() {
+fun PromoterExperiment(modifier: Modifier = Modifier) {
     val coroutineScope = rememberCoroutineScope()
 
     val promoter = remember {
@@ -49,8 +50,7 @@ fun PromoterExperiment() {
             model = PromoterModel<InteractionTarget>(savedStateMap = null),
             motionController = {
                 PromoterMotionController(
-                    uiContext = it,
-                    childSize = 100.dp,
+                    uiContext = it
                 )
             },
             animationSpec = spring(stiffness = Spring.StiffnessVeryLow / 20)
@@ -67,14 +67,14 @@ fun PromoterExperiment() {
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
     ) {
         val density = LocalDensity.current
         val screenWidthPx = (LocalConfiguration.current.screenWidthDp * density.density).roundToInt()
         val screenHeightPx = (LocalConfiguration.current.screenHeightDp * density.density).roundToInt()
 
-        DraggableAppyxComponent(
+        AppyxComponent(
             appyxComponent = promoter,
             modifier = Modifier
                 .weight(0.9f)

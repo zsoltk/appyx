@@ -7,7 +7,7 @@ import com.bumble.appyx.interactions.core.ui.property.impl.position.BiasAlignmen
 import com.bumble.appyx.interactions.core.ui.property.impl.position.PositionOutside
 import com.bumble.appyx.interactions.core.ui.state.MutableUiStateSpecs
 
-@Suppress("unused", "MemberVisibilityCanBePrivate")
+@Suppress("unused", "MemberVisibilityCanBePrivate", "MagicNumber")
 @MutableUiStateSpecs
 class TargetUiState(
     val position: PositionOutside.Target = PositionOutside.Target(OutsideAlignment(0f, 0f)),
@@ -17,7 +17,6 @@ class TargetUiState(
 ) {
 
     constructor(
-        elementWidth: Float,
         offsetMultiplier: Float,
         colorOverlay: ColorOverlay.Target = ColorOverlay.Target(0f),
         shadow: Shadow.Target = Shadow.Target(0f),

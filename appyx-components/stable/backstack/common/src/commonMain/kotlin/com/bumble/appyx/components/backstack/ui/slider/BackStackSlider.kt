@@ -26,22 +26,26 @@ class BackStackSlider<InteractionTarget : Any>(
             alpha = Alpha.Target(1f),
         )
 
-    override fun BackStackModel.State<InteractionTarget>.toUiTargets(): List<MatchedTargetUiState<InteractionTarget, TargetUiState>> =
+    override fun BackStackModel.State<InteractionTarget>.toUiTargets(
+    ): List<MatchedTargetUiState<InteractionTarget, TargetUiState>> =
         created.map { MatchedTargetUiState(it, visible.toOutsideRight()) } +
-            listOf(active).map { MatchedTargetUiState(it, visible.toNoOffset() ) } +
-            stashed.mapIndexed { index, element ->
-                MatchedTargetUiState(
-                    element,
-                    visible.toOutsideLeft()
-                )
-            } +
-            destroyed.mapIndexed { index, element ->
-                MatchedTargetUiState(
-                    element,
-                    fadeOut.toOutsideRight()
-                )
-            }
+                listOf(active).map { MatchedTargetUiState(it, visible.toNoOffset()) } +
+                stashed.mapIndexed { index, element ->
+                    MatchedTargetUiState(
+                        element,
+                        visible.toOutsideLeft((index - stashed.size).toFloat())
+                    )
+                } +
+                destroyed.mapIndexed { index, element ->
+                    MatchedTargetUiState(
+                        element,
+                        fadeOut.toOutsideRight()
+                    )
+                }
 
-    override fun mutableUiStateFor(uiContext: UiContext, targetUiState: TargetUiState): MutableUiState =
+    override fun mutableUiStateFor(
+        uiContext: UiContext,
+        targetUiState: TargetUiState
+    ): MutableUiState =
         targetUiState.toMutableState(uiContext)
 }

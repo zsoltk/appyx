@@ -3,6 +3,7 @@ package com.bumble.appyx.components.backstack.ui.stack3d
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
@@ -22,13 +23,21 @@ import com.bumble.appyx.interactions.core.ui.property.impl.position.PositionInsi
 import com.bumble.appyx.interactions.core.ui.state.MatchedTargetUiState
 import com.bumble.appyx.transitionmodel.BaseMotionController
 
+@Suppress("MagicNumber")
 class BackStack3D<InteractionTarget : Any>(
     uiContext: UiContext,
     private val itemsInStack: Int = 3,
 ) : BaseMotionController<InteractionTarget, State<InteractionTarget>, MutableUiState, TargetUiState>(
     uiContext = uiContext,
 ) {
-    private val height = uiContext.transitionBounds.heightDp
+    private var width: Dp = 0.dp
+    private var height: Dp = 0.dp
+
+    override fun updateBounds(transitionBounds: TransitionBounds) {
+        super.updateBounds(transitionBounds)
+        width = transitionBounds.widthDp
+        height = transitionBounds.heightDp
+    }
 
     private val topMost: TargetUiState =
         TargetUiState(

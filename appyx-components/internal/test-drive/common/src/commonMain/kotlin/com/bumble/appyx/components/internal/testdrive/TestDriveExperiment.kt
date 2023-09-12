@@ -30,7 +30,7 @@ import com.bumble.appyx.components.internal.testdrive.operation.next
 import com.bumble.appyx.components.internal.testdrive.ui.rotation.TestDriveRotationMotionController
 import com.bumble.appyx.components.internal.testdrive.ui.rotation.TestDriveRotationMotionController.Companion.toTargetUiState
 import com.bumble.appyx.components.internal.testdrive.ui.simple.TestDriveSimpleMotionController
-import com.bumble.appyx.interactions.core.DraggableAppyxComponent
+import com.bumble.appyx.interactions.core.AppyxComponent
 import com.bumble.appyx.interactions.core.gesture.GestureValidator
 import com.bumble.appyx.interactions.core.gesture.GestureValidator.Companion.defaultValidator
 import com.bumble.appyx.interactions.core.model.transition.Keyframes
@@ -39,7 +39,7 @@ import com.bumble.appyx.interactions.core.model.transition.Operation.Mode.KEYFRA
 import com.bumble.appyx.interactions.core.model.transition.Update
 import com.bumble.appyx.interactions.core.ui.helper.AppyxComponentSetup
 
-
+@Suppress("MagicNumber", "LongMethod")
 @Composable
 fun <InteractionTarget : Any> TestDriveExperiment(
     screenWidthPx: Int,
@@ -135,7 +135,7 @@ fun <InteractionTarget : Any> TestDriveUi(
                 vertical = 12.dp
             )
     ) {
-        DraggableAppyxComponent(
+        AppyxComponent(
             screenWidthPx = screenWidthPx,
             screenHeightPx = screenHeightPx,
             appyxComponent = testDrive,
