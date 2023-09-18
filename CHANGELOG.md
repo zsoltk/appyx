@@ -2,10 +2,24 @@
 
 ## Pending changes
 
+-
+
+## 2.0.0-alpha06
+
+### Changed
+
+- [#594](https://github.com/bumble-tech/appyx/pull/594) Reverted JVM bytecode target to JDK11 instead of 17
+
+
+<div style="text-align: center"><small>15 Sep 2023</small></div>
+
+---
+
+## 2.0.0-alpha05
+
 ### Added
 
 - [#579](https://github.com/bumble-tech/appyx/pull/579) – Expose `AndroidLifecycle` in `PlatformLifecycleRegistry` for Android
-
 
 ### Fixed
  
@@ -15,7 +29,12 @@
 - [#587](https://github.com/bumble-tech/appyx/pull/587) – Fix `DraggableChildren` and rename it to `AppyxComponent`
 - [#588](https://github.com/bumble-tech/appyx/pull/588) – Set bounds on all new motion controllers
 - [#589](https://github.com/bumble-tech/appyx/pull/589) – Fix visibility resolution for elements that do not match parent's size
+- [#591](https://github.com/bumble-tech/appyx/pull/591) – Flush output cache when onCreate is called in NodeConnector
+- [#592](https://github.com/bumble-tech/appyx/pull/592) – Fix Backstack3D Motion Controller
 
+<div style="text-align: center"><small>13 Sep 2023</small></div>
+
+---
 
 ## 2.0.0-alpha04
 
