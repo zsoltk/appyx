@@ -23,11 +23,10 @@ import com.bumble.appyx.components.backstack.ui.stack3d.BackStack3D
 import com.bumble.appyx.demos.sandbox.navigation.node.backstack.BackStackExamplesNode.NavTarget
 import com.bumble.appyx.demos.sandbox.navigation.ui.TextButton
 import com.bumble.appyx.demos.sandbox.navigation.ui.appyx_dark
-import com.bumble.appyx.interactions.core.ui.gesture.GestureSettleConfig
+import com.bumble.appyx.interactions.gesture.GestureSettleConfig
 import com.bumble.appyx.navigation.composable.AppyxNavigationContainer
 import com.bumble.appyx.navigation.modality.NodeContext
 import com.bumble.appyx.navigation.node.Node
-import com.bumble.appyx.navigation.node.ParentNode
 import com.bumble.appyx.navigation.node.node
 import com.bumble.appyx.utils.multiplatform.Parcelable
 import com.bumble.appyx.utils.multiplatform.Parcelize
@@ -42,7 +41,7 @@ class BackStackExamplesNode(
         ),
         visualisation = { BackStackSlider(it) }
     )
-) : ParentNode<NavTarget>(
+) : Node<NavTarget>(
     nodeContext = nodeContext,
     appyxComponent = backStack
 ) {
@@ -66,7 +65,7 @@ class BackStackExamplesNode(
         object BackStack3D : NavTarget()
     }
 
-    override fun buildChildNode(navTarget: NavTarget, nodeContext: NodeContext): Node =
+    override fun buildChildNode(navTarget: NavTarget, nodeContext: NodeContext): Node<*> =
         when (navTarget) {
             is NavTarget.BackStackPicker -> node(nodeContext) {
                 BackStackPicker(it)

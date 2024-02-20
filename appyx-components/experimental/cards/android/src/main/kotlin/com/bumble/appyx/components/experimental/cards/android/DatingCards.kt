@@ -14,10 +14,10 @@ import com.bumble.appyx.components.experimental.cards.CardsModel
 import com.bumble.appyx.components.experimental.cards.ui.CardsVisualisation
 import com.bumble.appyx.demos.common.profile.Profile
 import com.bumble.appyx.demos.common.profile.ProfileCard
-import com.bumble.appyx.interactions.core.AppyxInteractionsContainer
-import com.bumble.appyx.interactions.core.gesture.GestureValidator.Companion.permissiveValidator
-import com.bumble.appyx.interactions.core.ui.helper.AppyxComponentSetup
-import com.bumble.appyx.interactions.theme.appyx_dark
+import com.bumble.appyx.interactions.composable.AppyxInteractionsContainer
+import com.bumble.appyx.interactions.gesture.GestureValidator.Companion.permissiveValidator
+import com.bumble.appyx.interactions.ui.helper.AppyxComponentSetup
+import com.bumble.appyx.interactions.utils.ui.theme.appyx_dark
 import kotlin.math.roundToInt
 
 @Composable
@@ -47,10 +47,11 @@ fun DatingCards(modifier: Modifier = Modifier) {
         screenHeightPx = (LocalConfiguration.current.screenHeightDp * LocalDensity.current.density).roundToInt(),
         appyxComponent = cards,
         gestureValidator = permissiveValidator,
-    ) { elementUiModel ->
+    ) { element ->
         ProfileCard(
-            profile = elementUiModel.element.interactionTarget.profile,
-            modifier = Modifier.fillMaxSize().then(elementUiModel.modifier)
+            profile = element.interactionTarget.profile,
+            modifier = Modifier
+                .fillMaxSize()
         )
     }
 }

@@ -6,12 +6,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import com.bumble.appyx.demos.navigation.component.spotlighthero.SpotlightHeroModel.State
 import com.bumble.appyx.demos.navigation.component.spotlighthero.visualisation.SpotlightHeroVisualisation
-import com.bumble.appyx.interactions.core.model.BaseAppyxComponent
-import com.bumble.appyx.interactions.core.ui.Visualisation
-import com.bumble.appyx.interactions.core.ui.context.TransitionBounds
-import com.bumble.appyx.interactions.core.ui.context.UiContext
-import com.bumble.appyx.interactions.core.ui.gesture.GestureFactory
-import com.bumble.appyx.interactions.core.ui.gesture.GestureSettleConfig
+import com.bumble.appyx.interactions.model.BaseAppyxComponent
+import com.bumble.appyx.interactions.ui.Visualisation
+import com.bumble.appyx.interactions.ui.context.TransitionBounds
+import com.bumble.appyx.interactions.ui.context.UiContext
+import com.bumble.appyx.interactions.gesture.GestureFactory
+import com.bumble.appyx.interactions.gesture.GestureSettleConfig
 import com.bumble.appyx.mapState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,7 +34,6 @@ open class SpotlightHero<NavTarget : Any>(
         revertGestureSpec = animationSpec,
     ),
     disableAnimations: Boolean = false,
-    isDebug: Boolean = false
 ) : BaseAppyxComponent<NavTarget, State<NavTarget>>(
     scope = scope,
     model = model,
@@ -43,8 +42,7 @@ open class SpotlightHero<NavTarget : Any>(
     defaultAnimationSpec = animationSpec,
     gestureSettleConfig = gestureSettleConfig,
     disableAnimations = disableAnimations,
-    backPressStrategy = ExitHeroModeStrategy(scope),
-    isDebug = isDebug
+    backPressStrategy = ExitHeroModeStrategy(scope)
 ) {
     val currentState: State<NavTarget>
         get() = model.currentState

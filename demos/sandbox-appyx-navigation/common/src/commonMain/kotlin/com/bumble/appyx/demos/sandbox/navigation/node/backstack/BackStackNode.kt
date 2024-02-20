@@ -29,16 +29,14 @@ import com.bumble.appyx.demos.sandbox.navigation.ColorSaver
 import com.bumble.appyx.demos.sandbox.navigation.colors
 import com.bumble.appyx.demos.sandbox.navigation.ui.TextButton
 import com.bumble.appyx.demos.sandbox.navigation.ui.appyx_dark
-import com.bumble.appyx.interactions.core.ui.Visualisation
-import com.bumble.appyx.interactions.core.ui.context.TransitionBounds
-import com.bumble.appyx.interactions.core.ui.context.UiContext
-import com.bumble.appyx.interactions.core.ui.gesture.GestureFactory
-import com.bumble.appyx.interactions.core.ui.gesture.GestureSettleConfig
-import com.bumble.appyx.interactions.core.ui.helper.gestureModifier
+import com.bumble.appyx.interactions.ui.Visualisation
+import com.bumble.appyx.interactions.ui.context.TransitionBounds
+import com.bumble.appyx.interactions.ui.context.UiContext
+import com.bumble.appyx.interactions.gesture.GestureFactory
+import com.bumble.appyx.interactions.gesture.GestureSettleConfig
 import com.bumble.appyx.navigation.composable.AppyxNavigationContainer
 import com.bumble.appyx.navigation.modality.NodeContext
 import com.bumble.appyx.navigation.node.Node
-import com.bumble.appyx.navigation.node.ParentNode
 import com.bumble.appyx.navigation.node.node
 import com.bumble.appyx.utils.multiplatform.Parcelable
 import com.bumble.appyx.utils.multiplatform.Parcelize
@@ -62,7 +60,7 @@ class BackStackNode(
         gestureFactory = gestureFactory,
         gestureSettleConfig = gestureSettleConfig,
     )
-) : ParentNode<BackStackNode.NavTarget>(
+) : Node<BackStackNode.NavTarget>(
     nodeContext = nodeContext,
     appyxComponent = backStack,
 ) {
@@ -71,7 +69,7 @@ class BackStackNode(
         class Child(val index: Int) : NavTarget()
     }
 
-    override fun buildChildNode(navTarget: NavTarget, nodeContext: NodeContext): Node =
+    override fun buildChildNode(navTarget: NavTarget, nodeContext: NodeContext): Node<*> =
         when (navTarget) {
             is NavTarget.Child -> node(nodeContext) {
                 val backgroundColor =
@@ -89,7 +87,6 @@ class BackStackNode(
                         )
                         .background(backgroundColor)
                         .padding(24.dp)
-                        .gestureModifier(backStack, navTarget.index.toString())
                 ) {
                     Text(
                         text = navTarget.index.toString(),
