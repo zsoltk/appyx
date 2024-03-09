@@ -28,14 +28,13 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
-import androidx.compose.material3.DismissDirection.EndToStart
-import androidx.compose.material3.DismissValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SwipeToDismiss
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDismissState
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -118,12 +117,12 @@ private fun LazyItemScope.CartListItem(
     val quantity = cakeToQuantity.second
     val coroutineScope = rememberCoroutineScope()
 
-    val dismissState = rememberDismissState(confirmValueChange = { dismissValue ->
+    val dismissState = rememberSwipeToDismissBoxState(confirmValueChange = { dismissValue ->
         when (dismissValue) {
-            DismissValue.Default,
-            DismissValue.DismissedToEnd -> false
+            SwipeToDismissBoxValue.Settled,
+            SwipeToDismissBoxValue.StartToEnd -> false
 
-            DismissValue.DismissedToStart -> {
+            SwipeToDismissBoxValue.EndToStart -> {
                 coroutineScope.launch {
                     delay(250)
                     onDeleteCake(cake)
@@ -133,21 +132,21 @@ private fun LazyItemScope.CartListItem(
         }
     })
 
-    SwipeToDismiss(
+    SwipeToDismissBox(
         modifier = Modifier.animateItemPlacement(),
         state = dismissState,
-        directions = setOf(EndToStart),
-        background = { CartItemDismissBackground() },
-        dismissContent = {
-            CardItem(
-                cake = cake,
-                quantity = quantity,
-                onGoToCake = onGoToCake,
-                plusOneCakeAction = onPlusOneCake,
-                minusOneCakeAction = onMinusOneCake,
-            )
-        },
-    )
+        enableDismissFromStartToEnd = false,
+        enableDismissFromEndToStart = true,
+        backgroundContent = { CartItemDismissBackground() },
+    ) {
+        CardItem(
+            cake = cake,
+            quantity = quantity,
+            onGoToCake = onGoToCake,
+            plusOneCakeAction = onPlusOneCake,
+            minusOneCakeAction = onMinusOneCake,
+        )
+    }
 }
 
 @Composable
