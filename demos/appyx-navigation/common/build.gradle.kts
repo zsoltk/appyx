@@ -38,7 +38,7 @@ kotlin {
                 api(project(":utils:utils-customisations"))
                 api(project(":utils:utils-material3"))
                 api(project(":utils:utils-multiplatform"))
-                api(project(":demos:image-loader:image-loader"))
+                api(project(":demos:image-loader:common"))
                 implementation(project(":appyx-components:experimental:cards:cards"))
                 implementation(project(":appyx-components:experimental:promoter:promoter"))
                 implementation(project(":appyx-components:standard:backstack:backstack"))
