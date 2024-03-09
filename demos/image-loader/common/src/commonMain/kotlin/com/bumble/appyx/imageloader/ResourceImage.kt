@@ -12,11 +12,11 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.resource
+import org.jetbrains.compose.resources.InternalResourceApi
+import org.jetbrains.compose.resources.readResourceBytes
 
+@OptIn(InternalResourceApi::class)
 @Suppress("TooGenericExceptionCaught", "SwallowedException")
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ResourceImage(
     path: String,
@@ -29,13 +29,11 @@ fun ResourceImage(
     LaunchedEffect(Unit) {
         image = withContext(Dispatchers.Default) {
             try {
-                resource(path)
-                    .readBytes()
+                readResourceBytes(path)
                     .toImageBitmap()
             } catch (e: Throwable) {
                 try {
-                    resource(fallbackUrl)
-                        .readBytes()
+                    readResourceBytes(fallbackUrl)
                         .toImageBitmap()
                 } catch (e: Throwable) {
                     null
