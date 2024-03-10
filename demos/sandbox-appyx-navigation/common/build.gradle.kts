@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+
 plugins {
     id("com.bumble.appyx.multiplatform")
     id("org.jetbrains.compose")
@@ -20,6 +22,12 @@ kotlin {
         }
     }
     js(IR) {
+        // Adding moduleName as a workaround for this issue: https://youtrack.jetbrains.com/issue/KT-51942
+        moduleName = "demo-sandbox-appyx-navigation-common"
+        browser()
+    }
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
         // Adding moduleName as a workaround for this issue: https://youtrack.jetbrains.com/issue/KT-51942
         moduleName = "demo-sandbox-appyx-navigation-common"
         browser()
@@ -93,6 +101,7 @@ dependencies {
     add("kspAndroid", project(":ksp:appyx-processor"))
     add("kspDesktop", project(":ksp:appyx-processor"))
     add("kspJs", project(":ksp:appyx-processor"))
+    add("kspWasmJs", project(":ksp:appyx-processor"))
     add("kspIosArm64", project(":ksp:appyx-processor"))
     add("kspIosX64", project(":ksp:appyx-processor"))
     add("kspIosSimulatorArm64", project(":ksp:appyx-processor"))

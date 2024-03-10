@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+
 plugins {
     id("com.bumble.appyx.multiplatform")
     id("com.android.library")
@@ -23,7 +25,12 @@ kotlin {
         moduleName = "appyx-utils-material3"
         browser()
     }
-    
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        // Adding moduleName as a workaround for this issue: https://youtrack.jetbrains.com/issue/KT-51942
+        moduleName = "appyx-utils-material3"
+        browser()
+    }
     iosX64()
     iosArm64()
     iosSimulatorArm64()
