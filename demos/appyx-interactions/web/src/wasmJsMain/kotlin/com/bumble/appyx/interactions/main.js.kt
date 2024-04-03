@@ -25,7 +25,8 @@ import com.bumble.appyx.components.internal.testdrive.ui.md_light_green_500
 import com.bumble.appyx.components.internal.testdrive.ui.md_lime_500
 import com.bumble.appyx.components.internal.testdrive.ui.md_pink_500
 import com.bumble.appyx.components.internal.testdrive.ui.md_teal_500
-import org.jetbrains.skiko.wasm.onWasmReady
+
+external fun onWasmReady(onReady: () -> Unit)
 
 val manatee = Color(0xFF8D99AE)
 val silver_sand = Color(0xFFBDC6D1)

@@ -22,9 +22,9 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.CanvasBasedWindow
 import com.bumble.appyx.demos.sandbox.navigation.node.container.MainNavNode
 import com.bumble.appyx.demos.sandbox.navigation.ui.AppyxSampleAppTheme
+import com.bumble.appyx.navigation.integration.BrowserViewportWindow
 import com.bumble.appyx.navigation.integration.ScreenSize
 import com.bumble.appyx.navigation.integration.WebNodeHost
 import kotlinx.coroutines.CoroutineScope
@@ -35,11 +35,10 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import org.jetbrains.skiko.wasm.onWasmReady
 
-@OptIn(ExperimentalComposeUiApi::class)
 fun main() {
     val events: Channel<Unit> = Channel()
     onWasmReady {
-        CanvasBasedWindow("Navigation Demo") {
+        BrowserViewportWindow("Navigation Demo") {
             val requester = remember { FocusRequester() }
             var hasFocus by remember { mutableStateOf(false) }
 

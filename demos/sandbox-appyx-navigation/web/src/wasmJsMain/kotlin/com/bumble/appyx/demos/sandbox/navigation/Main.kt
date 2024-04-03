@@ -33,7 +33,8 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import org.jetbrains.skiko.wasm.onWasmReady
+
+external fun onWasmReady(onReady: () -> Unit)
 
 fun main() {
     val events: Channel<Unit> = Channel()

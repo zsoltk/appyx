@@ -23,7 +23,6 @@ private const val CANVAS_ELEMENT_ID = "ComposeTarget" // Hardwired into ComposeW
 /**
  * A Skiko/Canvas-based top-level window using the browser's entire viewport. Supports resizing.
  */
-@Composable
 @Suppress("FunctionNaming")
 fun BrowserViewportWindow(
     title: String = "Untitled",
@@ -61,7 +60,7 @@ fun BrowserViewportWindow(
     }
 
     ComposeWindow(canvasId = "Appyx", content = content).apply {
-        window.addEventListener("resize", {
+        window.addEventListener("resize") {
             canvas.fillViewportSize()
             layer.layer.attachTo(canvas)
             layer.layer.needRedraw()
@@ -70,7 +69,7 @@ fun BrowserViewportWindow(
                 (canvas.width / scale * density.density).toInt(),
                 (canvas.height / scale * density.density).toInt()
             )
-        })
+        }
 
         // WORKAROUND: ComposeWindow does not implement `setTitle(title)`
         val htmlTitleElement = (

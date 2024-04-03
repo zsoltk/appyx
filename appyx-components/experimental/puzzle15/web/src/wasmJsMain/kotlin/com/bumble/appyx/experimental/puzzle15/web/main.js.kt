@@ -18,7 +18,8 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.window.CanvasBasedWindow
 import com.bumble.appyx.components.experimental.puzzle15.ui.Puzzle15Ui
-import org.jetbrains.skiko.wasm.onWasmReady
+
+external fun onWasmReady(onReady: () -> Unit)
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {

@@ -15,8 +15,8 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.CanvasBasedWindow
 import com.bumble.appyx.demos.common.color_dark
-import org.jetbrains.skiko.wasm.onWasmReady
 
+external fun onWasmReady(onReady: () -> Unit)
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
