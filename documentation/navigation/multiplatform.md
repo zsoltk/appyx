@@ -138,7 +138,7 @@ fun main() = application {
 fun main() {
     val events: Channel<Unit> = Channel()
     onWasmReady {
-        BrowserViewportWindow("Your app") {
+        CanvasBasedWindow("Your app") {
             val requester = remember { FocusRequester() }
             var hasFocus by remember { mutableStateOf(false) }
             var screenSize by remember { mutableStateOf(ScreenSize(0.dp, 0.dp)) }
