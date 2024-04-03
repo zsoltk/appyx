@@ -10,9 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Button
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -29,12 +29,12 @@ import com.bumble.appyx.interactions.composable.AppyxInteractionsContainer
 import com.bumble.appyx.interactions.model.transition.Operation.Mode.IMMEDIATE
 import com.bumble.appyx.interactions.model.transition.Operation.Mode.KEYFRAME
 import com.bumble.appyx.interactions.ui.helper.AppyxComponentSetup
-import com.bumble.appyx.interactions.utils.ui.Element
 import com.bumble.appyx.interactions.utils.testing.TestTarget
 import com.bumble.appyx.interactions.utils.testing.TestTarget.Child1
 import com.bumble.appyx.interactions.utils.testing.TestTarget.Child2
 import com.bumble.appyx.interactions.utils.testing.TestTarget.Child3
 import com.bumble.appyx.interactions.utils.testing.TestTarget.Child4
+import com.bumble.appyx.interactions.utils.ui.Element
 import kotlin.math.roundToInt
 
 
@@ -71,8 +71,10 @@ fun PromoterExperiment(modifier: Modifier = Modifier) {
             .fillMaxSize()
     ) {
         val density = LocalDensity.current
-        val screenWidthPx = (LocalConfiguration.current.screenWidthDp * density.density).roundToInt()
-        val screenHeightPx = (LocalConfiguration.current.screenHeightDp * density.density).roundToInt()
+        val screenWidthPx =
+            (LocalConfiguration.current.screenWidthDp * density.density).roundToInt()
+        val screenHeightPx =
+            (LocalConfiguration.current.screenHeightDp * density.density).roundToInt()
 
         AppyxInteractionsContainer(
             appyxComponent = promoter,
