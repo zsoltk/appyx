@@ -27,7 +27,7 @@ kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         // Adding moduleName as a workaround for this issue: https://youtrack.jetbrains.com/issue/KT-51942
-        moduleName = "appyx-utils-customisation"
+        moduleName = "appyx-utils-customisation-wa"
         browser()
     }
     iosX64()

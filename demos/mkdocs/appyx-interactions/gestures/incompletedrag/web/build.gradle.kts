@@ -14,7 +14,7 @@ kotlin {
     }
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "appyx-interactions-gestures-incompletedrag-web"
+        moduleName = "appyx-interactions-gestures-incompletedrag-web-wa"
         browser()
         binaries.executable()
     }

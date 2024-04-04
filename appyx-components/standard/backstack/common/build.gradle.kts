@@ -30,7 +30,7 @@ kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         // Adding moduleName as a workaround for this issue: https://youtrack.jetbrains.com/issue/KT-51942
-        moduleName = "appyx-components-stable-backstack-commons"
+        moduleName = "appyx-components-stable-backstack-commons-wa"
         browser()
     }
 

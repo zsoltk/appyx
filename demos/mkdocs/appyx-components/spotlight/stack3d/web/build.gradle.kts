@@ -14,7 +14,7 @@ kotlin {
     }
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "appyx-components-spotlight-stack3d-web"
+        moduleName = "appyx-components-spotlight-stack3d-web-wa"
         browser()
         binaries.executable()
     }

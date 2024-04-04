@@ -30,7 +30,7 @@ kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         // Adding moduleName as a workaround for this issue: https://youtrack.jetbrains.com/issue/KT-51942
-        moduleName = "appyx-components-experimental-promoter-commons"
+        moduleName = "appyx-components-experimental-promoter-commons-wa"
         browser()
     }
     iosX64()

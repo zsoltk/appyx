@@ -29,7 +29,7 @@ kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         // Adding moduleName as a workaround for this issue: https://youtrack.jetbrains.com/issue/KT-51942
-        moduleName = "appyx-components-internal-testdrive-common"
+        moduleName = "appyx-components-internal-testdrive-common-wa"
         browser()
     }
     sourceSets {

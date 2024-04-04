@@ -13,7 +13,7 @@ kotlin {
     }
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "demos-mkdocs-common"
+        moduleName = "demos-mkdocs-common-wa"
         browser()
         binaries.executable()
     }

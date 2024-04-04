@@ -14,7 +14,7 @@ kotlin {
     }
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "demos-mkdocs-appyx-components-common"
+        moduleName = "demos-mkdocs-appyx-components-common-wa"
         browser()
         binaries.executable()
     }

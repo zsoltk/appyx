@@ -27,7 +27,7 @@ kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         // Adding moduleName as a workaround for this issue: https://youtrack.jetbrains.com/issue/KT-51942
-        moduleName = "appyx-navigation-imageloader"
+        moduleName = "appyx-navigation-imageloader-wa"
         browser()
     }
 

@@ -14,7 +14,7 @@ kotlin {
     }
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "appyx-demos-backstack-fader-web"
+        moduleName = "appyx-demos-backstack-fader-web-wa"
         browser()
         binaries.executable()
     }

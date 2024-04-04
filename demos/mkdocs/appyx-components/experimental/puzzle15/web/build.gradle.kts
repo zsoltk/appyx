@@ -14,7 +14,7 @@ kotlin {
     }
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "appyx-demos-experimental-puzzle15-web"
+        moduleName = "appyx-demos-experimental-puzzle15-web-wa"
         browser()
         binaries.executable()
     }

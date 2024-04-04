@@ -14,7 +14,7 @@ kotlin {
     }
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "appyx-components-spotlight-fader-web"
+        moduleName = "appyx-components-spotlight-fader-web-wa"
         browser()
         binaries.executable()
     }

@@ -14,7 +14,7 @@ kotlin {
     }
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "appyx-interactions-observemp-web"
+        moduleName = "appyx-interactions-observemp-web-wa"
         browser()
         binaries.executable()
     }

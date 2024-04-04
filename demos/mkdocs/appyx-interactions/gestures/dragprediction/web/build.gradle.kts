@@ -14,7 +14,7 @@ kotlin {
     }
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "appyx-interactions-gestures-dragpredication-web"
+        moduleName = "appyx-interactions-gestures-dragpredication-web-wa"
         browser()
         binaries.executable()
     }
