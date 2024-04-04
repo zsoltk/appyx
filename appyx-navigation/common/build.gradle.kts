@@ -29,7 +29,15 @@ kotlin {
     wasmJs {
         // Adding moduleName as a workaround for this issue: https://youtrack.jetbrains.com/issue/KT-51942
         moduleName = "appyx-navigation-common-wa"
-        browser()
+        browser {
+            // Refer to this Slack thread for more details: https://kotlinlang.slack.com/archives/CDFP59223/p1702977410505449?thread_ts=1702668737.674499&cid=CDFP59223
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                    useConfigDirectory(project.projectDir.resolve("karma.config.d").resolve("wasm"))
+                }
+            }
+        }
     }
 
     iosX64()
@@ -105,4 +113,8 @@ android {
         androidTestImplementation(libs.compose.ui.test.junit4)
         androidTestImplementation(project(":utils:testing-ui"))
     }
+}
+
+compose.experimental {
+    web.application {}
 }

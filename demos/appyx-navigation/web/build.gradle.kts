@@ -15,7 +15,15 @@ kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "appyx-demos-navigation-web-wa"
-        browser()
+        browser {
+            // Refer to this Slack thread for more details: https://kotlinlang.slack.com/archives/CDFP59223/p1702977410505449?thread_ts=1702668737.674499&cid=CDFP59223
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                    useConfigDirectory(project.projectDir.resolve("karma.config.d").resolve("wasm"))
+                }
+            }
+        }
         binaries.executable()
     }
     sourceSets {
@@ -52,7 +60,7 @@ tasks.register<Copy>("jsCopyResources") {
     from("../common/src/commonMain/resources")
 
     // Output for web resources
-    into("$buildDir/processedResources/js/main")
+    into("${layout.buildDirectory}/processedResources/js/main")
 
     include("**/*")
 }
@@ -70,7 +78,7 @@ tasks.register<Copy>("wasmJsCopyResources") {
     from("../common/src/commonMain/resources")
 
     // Output for web resources
-    into("$buildDir/processedResources/wasmJs/main")
+    into("${layout.buildDirectory}/processedResources/wasmJs/main")
 
     include("**/*")
 }

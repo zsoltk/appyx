@@ -25,12 +25,22 @@ kotlin {
         // Adding moduleName as a workaround for this issue: https://youtrack.jetbrains.com/issue/KT-51942
         moduleName = "appyx-components-internal-testdrive-common"
         browser()
+        binaries.executable()
     }
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         // Adding moduleName as a workaround for this issue: https://youtrack.jetbrains.com/issue/KT-51942
         moduleName = "appyx-components-internal-testdrive-common-wa"
-        browser()
+        browser {
+            // Refer to this Slack thread for more details: https://kotlinlang.slack.com/archives/CDFP59223/p1702977410505449?thread_ts=1702668737.674499&cid=CDFP59223
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                    useConfigDirectory(project.projectDir.resolve("karma.config.d").resolve("wasm"))
+                }
+            }
+        }
+        binaries.executable()
     }
     sourceSets {
         val commonMain by getting {
@@ -50,6 +60,10 @@ kotlin {
         val desktopMain by getting
         val jsMain by getting
     }
+}
+
+compose.experimental {
+    web.application {}
 }
 
 dependencies {
