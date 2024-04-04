@@ -25,6 +25,7 @@ kotlin {
         // Adding moduleName as a workaround for this issue: https://youtrack.jetbrains.com/issue/KT-51942
         moduleName = "appyx-navigation-common"
         browser()
+        binaries.executable()
     }
     wasmJs {
         // Adding moduleName as a workaround for this issue: https://youtrack.jetbrains.com/issue/KT-51942
@@ -38,6 +39,7 @@ kotlin {
                 }
             }
         }
+        binaries.executable()
     }
 
     iosX64()
