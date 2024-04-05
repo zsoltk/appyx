@@ -35,6 +35,8 @@ class MultiplatformConventionPlugin : Plugin<Project> {
                 "src/desktopTest/kotlin",
                 "src/jsMain/kotlin",
                 "src/jsTest/kotlin",
+                "src/wasmJsMain/kotlin",
+                "src/wasmJsTest/kotlin",
                 "src/iosMain/kotlin",
             )
         }
