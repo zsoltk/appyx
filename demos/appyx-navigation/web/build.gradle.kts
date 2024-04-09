@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+
 plugins {
     id("com.bumble.appyx.multiplatform")
     id("org.jetbrains.compose")
@@ -8,6 +10,20 @@ kotlin {
     js(IR) {
         moduleName = "appyx-demos-navigation-web"
         browser()
+        binaries.executable()
+    }
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        moduleName = "appyx-demos-navigation-web-wa"
+        browser {
+            // Refer to this Slack thread for more details: https://kotlinlang.slack.com/archives/CDFP59223/p1702977410505449?thread_ts=1702668737.674499&cid=CDFP59223
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                    useConfigDirectory(project.projectDir.resolve("karma.config.d").resolve("wasm"))
+                }
+            }
+        }
         binaries.executable()
     }
     sourceSets {
@@ -36,22 +52,41 @@ compose.experimental {
 dependencies {
     add("kspCommonMainMetadata", project(":ksp:appyx-processor"))
     add("kspJs", project(":ksp:appyx-processor"))
+    add("kspWasmJs", project(":ksp:appyx-processor"))
 }
 
-tasks.register<Copy>("copyResources") {
+tasks.register<Copy>("jsCopyResources") {
     // Dirs containing files we want to copy
     from("../common/src/commonMain/resources")
 
     // Output for web resources
-    into("$buildDir/processedResources/js/main")
+    into("${layout.buildDirectory}/processedResources/js/main")
 
     include("**/*")
 }
 
 tasks.named("jsBrowserProductionExecutableDistributeResources") {
-    dependsOn("copyResources")
+    dependsOn("jsCopyResources")
 }
 
 tasks.named("jsMainClasses") {
-    dependsOn("copyResources")
+    dependsOn("jsCopyResources")
+}
+
+tasks.register<Copy>("wasmJsCopyResources") {
+    // Dirs containing files we want to copy
+    from("../common/src/commonMain/resources")
+
+    // Output for web resources
+    into("${layout.buildDirectory}/processedResources/wasmJs/main")
+
+    include("**/*")
+}
+
+tasks.named("wasmJsBrowserProductionExecutableDistributeResources") {
+    dependsOn("wasmJsCopyResources")
+}
+
+tasks.named("wasmJsMainClasses") {
+    dependsOn("wasmJsCopyResources")
 }
