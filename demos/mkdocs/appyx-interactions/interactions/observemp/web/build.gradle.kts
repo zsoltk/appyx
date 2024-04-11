@@ -7,11 +7,6 @@ plugins {
 }
 
 kotlin {
-    js(IR) {
-        moduleName = "appyx-interactions-observemp-web"
-        browser()
-        binaries.executable()
-    }
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "appyx-interactions-observemp-web-wa"
@@ -46,6 +41,5 @@ compose.experimental {
 
 dependencies {
     add("kspCommonMainMetadata", project(":ksp:appyx-processor"))
-    add("kspJs", project(":ksp:appyx-processor"))
     add("kspWasmJs", project(":ksp:appyx-processor"))
 }

@@ -7,11 +7,6 @@ plugins {
 }
 
 kotlin {
-    js(IR) {
-        moduleName = "appyx-components-spotlight-fader-web"
-        browser()
-        binaries.executable()
-    }
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "appyx-components-spotlight-fader-web-wa"
@@ -37,11 +32,6 @@ kotlin {
                 implementation(project(":demos:mkdocs:appyx-components:common"))
             }
         }
-        val jsMain by getting {
-            dependencies {
-                implementation(project(":demos:mkdocs:common"))
-            }
-        }
         val wasmJsMain by getting {
             dependencies {
                 implementation(project(":demos:mkdocs:common"))
@@ -56,6 +46,5 @@ compose.experimental {
 
 dependencies {
     add("kspCommonMainMetadata", project(":ksp:appyx-processor"))
-    add("kspJs", project(":ksp:appyx-processor"))
     add("kspWasmJs", project(":ksp:appyx-processor"))
 }
