@@ -41,6 +41,11 @@ kotlin {
                 implementation(project(":demos:mkdocs:common"))
             }
         }
+        val wasmJsMain by getting {
+            dependencies {
+                implementation(project(":demos:mkdocs:common"))
+            }
+        }
     }
 }
 

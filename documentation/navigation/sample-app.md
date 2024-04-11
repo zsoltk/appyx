@@ -6,8 +6,8 @@ title: Appyx Navigation – Sample app
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/appyx-navigation/web/build/dist/js/productionExecutable",
-        compile_task=":demos:appyx-navigation:web:jsBrowserDistribution",
+        project_output_directory="demos/appyx-navigation/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:appyx-navigation:web:wasmJsBrowserDistribution",
         width=512,
         height=500,
         target_directory="samples/documentation-appyx-navigation",
