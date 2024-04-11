@@ -78,7 +78,7 @@ tasks.register<Copy>("wasmJsCopyResources") {
     from("../common/src/commonMain/resources")
 
     // Output for web resources
-    into("${layout.buildDirectory.get().asFile}/processedResources/js/main")
+    into("${layout.buildDirectory.get().asFile}/processedResources/wasmJs/main")
 
     include("**/*")
 }
