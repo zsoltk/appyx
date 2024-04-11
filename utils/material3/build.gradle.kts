@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+
 plugins {
     id("com.bumble.appyx.multiplatform")
     id("com.android.library")
@@ -22,8 +24,23 @@ kotlin {
         // Adding moduleName as a workaround for this issue: https://youtrack.jetbrains.com/issue/KT-51942
         moduleName = "appyx-utils-material3"
         browser()
+        binaries.executable()
     }
-    
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        // Adding moduleName as a workaround for this issue: https://youtrack.jetbrains.com/issue/KT-51942
+        moduleName = "appyx-utils-material3-wa"
+        browser {
+            // Refer to this Slack thread for more details: https://kotlinlang.slack.com/archives/CDFP59223/p1702977410505449?thread_ts=1702668737.674499&cid=CDFP59223
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                    useConfigDirectory(project.projectDir.resolve("karma.config.d").resolve("wasm"))
+                }
+            }
+        }
+        binaries.executable()
+    }
     iosX64()
     iosArm64()
     iosSimulatorArm64()
@@ -51,4 +68,8 @@ kotlin {
             iosSimulatorArm64Main.dependsOn(this)
         }
     }
+}
+
+compose.experimental {
+    web.application {}
 }
