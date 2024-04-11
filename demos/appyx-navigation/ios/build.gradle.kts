@@ -50,7 +50,7 @@ tasks.register<Copy>("copyResources") {
     from("../common/src/commonMain/resources")
 
     // Output for iOS resources
-    into("$buildDir/compose/ios/ios/compose-resources")
+    into("${layout.buildDirectory.get().asFile}/compose/ios/ios/compose-resources")
 
     include("**/*")
 }
