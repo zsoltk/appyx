@@ -16,6 +16,7 @@
 ### Enhancement
 
 - [#679](https://github.com/bumble-tech/appyx/pull/679) – Simple api for backStackNode and spotlightNode
+- [#694](https://github.com/bumble-tech/appyx/pull/694) – appyxComponent state not restored after configuration changes
 
 ---
 
