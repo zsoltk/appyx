@@ -8,6 +8,7 @@ import com.bumble.appyx.interactions.gesture.GestureSettleConfig
 import com.bumble.appyx.interactions.model.BaseAppyxComponent
 import com.bumble.appyx.interactions.model.backpresshandlerstrategies.BackPressHandlerStrategy
 import com.bumble.appyx.interactions.model.backpresshandlerstrategies.DontHandleBackPress
+import com.bumble.appyx.interactions.state.MutableSavedStateMap
 import com.bumble.appyx.interactions.ui.Visualisation
 import com.bumble.appyx.interactions.ui.context.TransitionBounds
 import com.bumble.appyx.interactions.ui.context.UiContext
@@ -35,4 +36,15 @@ class DummyComponent<NavTarget : Any>(
     backPressStrategy = backPressStrategy,
     defaultAnimationSpec = animationSpec,
     disableAnimations = disableAnimations
-)
+) {
+    var saveInstanceStateInvoked: Int = 0
+
+    fun resetSaveInstanceState() {
+        saveInstanceStateInvoked = 0
+    }
+
+    override fun saveInstanceState(state: MutableSavedStateMap) {
+        super.saveInstanceState(state)
+        saveInstanceStateInvoked += 1
+    }
+}

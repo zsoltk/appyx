@@ -8,7 +8,7 @@ import com.bumble.appyx.navigation.node.node
 
 class RootNode(
     nodeContext: NodeContext,
-    dummyComponent: DummyComponent<NavTarget> = DummyComponent(
+    appyxComponent: DummyComponent<NavTarget> = DummyComponent(
         model = DummyComponentModel(
             initialTarget = NavTarget.Child1,
             savedStateMap = nodeContext.savedStateMap
@@ -17,7 +17,7 @@ class RootNode(
     )
 ) : Node<NavTarget>(
     nodeContext = nodeContext,
-    appyxComponent = dummyComponent,
+    appyxComponent = appyxComponent,
 ) {
     sealed interface NavTarget {
         data object Child1 : NavTarget
