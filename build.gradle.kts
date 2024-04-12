@@ -112,7 +112,7 @@ allprojects {
 }
 
 val buildNonMkdocsTask = tasks.register("buildNonMkdocs")
-val jsBrowserDistributionMkdocsTask = tasks.register("jsBrowserDistributionMkdocs")
+val wasmJsBrowserDistributionMkdocsTask = tasks.register("wasmJsBrowserDistributionMkdocs")
 
 val conventionalPluginsWhiteList = listOf("benchmark-test")
 
@@ -133,8 +133,8 @@ subprojects {
         }
     } else {
         plugins.withId("org.jetbrains.kotlin.multiplatform") {
-            jsBrowserDistributionMkdocsTask
-                .configure { dependsOn(tasks.named("jsBrowserDistribution")) }
+            wasmJsBrowserDistributionMkdocsTask
+                .configure { dependsOn(tasks.named("wasmJsBrowserDistribution")) }
         }
     }
 

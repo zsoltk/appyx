@@ -16,8 +16,8 @@ title: Appyx Navigation – Overview
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/appyx-navigation/web/build/dist/js/productionExecutable",
-        compile_task=":demos:appyx-navigation:web:jsBrowserDistribution",
+        project_output_directory="demos/appyx-navigation/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:appyx-navigation:web:wasmJsBrowserDistribution",
         width=512,
         height=500,
         target_directory="samples/documentation-appyx-navigation",
@@ -73,8 +73,8 @@ For more info and points of interest, make sure to check out:
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/mkdocs/appyx-components/backstack/parallax/web/build/dist/js/productionExecutable",
-        compile_task=":demos:mkdocs:appyx-components:backstack:parallax:web:jsBrowserDistribution",
+        project_output_directory="demos/mkdocs/appyx-components/backstack/parallax/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:mkdocs:appyx-components:backstack:parallax:web:wasmJsBrowserDistribution",
         width=512,
         height=384,
         target_directory="samples/documentation-components-backstack-parallax",

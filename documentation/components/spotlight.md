@@ -17,8 +17,8 @@ Class: `SpotlightSlider`
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/mkdocs/appyx-components/spotlight/slider/web/build/dist/js/productionExecutable",
-        compile_task=":demos:mkdocs:appyx-components:spotlight:slider:web:jsBrowserDistribution",
+        project_output_directory="demos/mkdocs/appyx-components/spotlight/slider/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:mkdocs:appyx-components:spotlight:slider:web:wasmJsBrowserDistribution",
         width=512,
         height=384,
         target_directory="samples/documentation-components-spotlight-slider",
@@ -34,8 +34,8 @@ Class: `SpotlightSliderScale`
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/mkdocs/appyx-components/spotlight/sliderscale/web/build/dist/js/productionExecutable",
-        compile_task=":demos:mkdocs:appyx-components:spotlight:sliderscale:web:jsBrowserDistribution",
+        project_output_directory="demos/mkdocs/appyx-components/spotlight/sliderscale/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:mkdocs:appyx-components:spotlight:sliderscale:web:wasmJsBrowserDistribution",
         width=512,
         height=384,
         target_directory="samples/documentation-components-spotlight-sliderscale",
@@ -50,8 +50,8 @@ Class: `SpotlightSliderRotation`
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/mkdocs/appyx-components/spotlight/sliderrotation/web/build/dist/js/productionExecutable",
-        compile_task=":demos:mkdocs:appyx-components:spotlight:sliderrotation:web:jsBrowserDistribution",
+        project_output_directory="demos/mkdocs/appyx-components/spotlight/sliderrotation/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:mkdocs:appyx-components:spotlight:sliderrotation:web:wasmJsBrowserDistribution",
         width=512,
         height=384,
         target_directory="samples/documentation-components-spotlight-sliderrotation",
@@ -66,8 +66,8 @@ Class: `SpotlightStack3D`
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/mkdocs/appyx-components/spotlight/stack3d/web/build/dist/js/productionExecutable",
-        compile_task=":demos:mkdocs:appyx-components:spotlight:stack3d:web:jsBrowserDistribution",
+        project_output_directory="demos/mkdocs/appyx-components/spotlight/stack3d/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:mkdocs:appyx-components:spotlight:stack3d:web:wasmJsBrowserDistribution",
         width=512,
         height=384,
         target_directory="samples/documentation-components-spotlight-stack3d",
@@ -82,8 +82,8 @@ Class: `SpotlightFader`
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/mkdocs/appyx-components/spotlight/fader/web/build/dist/js/productionExecutable",
-        compile_task=":demos:mkdocs:appyx-components:spotlight:fader:web:jsBrowserDistribution",
+        project_output_directory="demos/mkdocs/appyx-components/spotlight/fader/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:mkdocs:appyx-components:spotlight:fader:web:wasmJsBrowserDistribution",
         width=512,
         height=384,
         target_directory="samples/documentation-components-spotlight-fader",

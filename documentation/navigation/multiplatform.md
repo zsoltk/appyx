@@ -10,6 +10,7 @@ title: Appyx Navigation – Multiplatform
 ![badge-jvm](https://img.shields.io/badge/platform-jvm-orange)
 ![badge-macos](https://img.shields.io/badge/platform-macos-purple)
 ![badge-js](https://img.shields.io/badge/platform-js-yellow)
+![badge-wasm](https://img.shields.io/badge/platform-wasm-teal)
 ![badge-ios](https://img.shields.io/badge/platform-ios-lightgray)
 
 ## Lifecycle
@@ -135,6 +136,9 @@ fun main() = application {
 ### Web
 
 ```kotlin
+// Add this only when targeting Kotlin/Wasm as this method isn't exposed anywhere
+external fun onWasmReady(onReady: () -> Unit)
+
 fun main() {
     val events: Channel<Unit> = Channel()
     onWasmReady {
@@ -407,7 +411,9 @@ To run the application on web:
 
 1. In the list of run configurations, select **Edit Configurations**.
 2. Click **Add new configuration** and select **Gradle**.
-3. Set `jsBrowserDevelopmentRun` under `Run`.
+3. Decide which target you prefer and choose the appropriate task under run:
+      - `jsBrowserDevelopmentRun` for targeting Kotlin/JS.
+      - `wasmJsBrowserDevelopmentRun` for targeting Kotlin/Wasm. 
 4. Select the desired target under `Gradle project` to be executed (for example: `appyx:demos:appyx-navigation:web`).
 5. The web configuration for the desired target is now available. Click **Run** to execute.
 
