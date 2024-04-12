@@ -12,11 +12,11 @@ import com.bumble.appyx.interactions.ui.Visualisation
 import com.bumble.appyx.interactions.ui.context.TransitionBounds
 import com.bumble.appyx.interactions.ui.context.UiContext
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.test.StandardTestDispatcher
 
 class DummyComponent<NavTarget : Any>(
-    scope: CoroutineScope = CoroutineScope(SupervisorJob() + StandardTestDispatcher()),
+    scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main),
     val model: DummyComponentModel<NavTarget>,
     visualisation: (UiContext) -> Visualisation<NavTarget, State<NavTarget>>,
     animationSpec: AnimationSpec<Float> = spring(),

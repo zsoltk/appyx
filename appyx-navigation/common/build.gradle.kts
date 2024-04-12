@@ -61,7 +61,6 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
-                implementation(libs.kotlin.coroutines.test)
             }
         }
         val androidMain by getting {
