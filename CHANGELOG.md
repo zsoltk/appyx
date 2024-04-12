@@ -12,11 +12,11 @@
 - [#670](https://github.com/bumble-tech/appyx/pull/670) - Fixes ios lifecycle
 - [#673](https://github.com/bumble-tech/appyx/pull/673) – Fix canHandeBackPress typo
 - [#671](https://github.com/bumble-tech/appyx/issue/671) – Fix ui state saving issue
+- [#694](https://github.com/bumble-tech/appyx/pull/694) – Fix appyxComponent state saving issue
 
 ### Enhancement
 
 - [#679](https://github.com/bumble-tech/appyx/pull/679) – Simple api for backStackNode and spotlightNode
-- [#694](https://github.com/bumble-tech/appyx/pull/694) – appyxComponent state not restored after configuration changes
 
 ---
 
