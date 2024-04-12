@@ -7,11 +7,6 @@ plugins {
 }
 
 kotlin {
-    js(IR) {
-        moduleName = "appyx-interactions-sample3-web"
-        browser()
-        binaries.executable()
-    }
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "appyx-interactions-sample3-web-wa"
@@ -37,7 +32,7 @@ kotlin {
                 implementation(project(":utils:utils-multiplatform"))
             }
         }
-        val jsMain by getting {
+        val wasmJsMain by getting {
             dependencies {
                 implementation(project(":demos:mkdocs:common"))
             }
@@ -51,6 +46,5 @@ compose.experimental {
 
 dependencies {
     add("kspCommonMainMetadata", project(":ksp:appyx-processor"))
-    add("kspJs", project(":ksp:appyx-processor"))
     add("kspWasmJs", project(":ksp:appyx-processor"))
 }

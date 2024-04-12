@@ -175,7 +175,7 @@ jobs:
         with:
           cache-read-only: ${{ env.MAIN_BRANCH != 'true' }}
       - name: Generate distributions
-        run: ./gradlew jsBrowserDistributionMkdocs --continue
+        run: ./gradlew wasmJsBrowserDistributionMkdocs --continue
       - uses: actions/setup-python@v5
         with:
           python-version: '3.x'

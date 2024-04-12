@@ -8,6 +8,7 @@ title: Appyx – Overview
 ![badge-jvm](https://img.shields.io/badge/platform-jvm-orange)
 ![badge-macos](https://img.shields.io/badge/platform-macos-purple)
 ![badge-js](https://img.shields.io/badge/platform-js-yellow)
+![badge-wasm](https://img.shields.io/badge/platform-wasm-teal)
 ![badge-ios](https://img.shields.io/badge/platform-ios-lightgray)
 
 Model-driven navigation + UI components with gesture control for Compose Multiplatform.
@@ -40,8 +41,8 @@ Appyx is a collection of libraries:
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/appyx-navigation/web/build/dist/js/productionExecutable",
-        compile_task=":demos:appyx-navigation:web:jsBrowserDistribution",
+        project_output_directory="demos/appyx-navigation/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:appyx-navigation:web:wasmJsBrowserDistribution",
         width=512,
         height=500,
         target_directory="samples/documentation-appyx-navigation",
@@ -63,8 +64,8 @@ Appyx is a collection of libraries:
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/mkdocs/appyx-interactions/interactions/sample2/web/build/dist/js/productionExecutable",
-        compile_task=":demos:mkdocs:appyx-interactions:interactions:sample2:web:jsBrowserDistribution",
+        project_output_directory="demos/mkdocs/appyx-interactions/interactions/sample2/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:mkdocs:appyx-interactions:interactions:sample2:web:wasmJsBrowserDistribution",
         width=512,
         height=384,
         target_directory="samples/documentation-interactions-index-2",
@@ -84,8 +85,8 @@ Back stack, Spotlight (pager), and other UI components built using [Appyx Intera
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/mkdocs/appyx-components/spotlight/slider/web/build/dist/js/productionExecutable",
-        compile_task=":demos:mkdocs:appyx-components:spotlight:slider:web:jsBrowserDistribution",
+        project_output_directory="demos/mkdocs/appyx-components/spotlight/slider/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:mkdocs:appyx-components:spotlight:slider:web:wasmJsBrowserDistribution",
         width=512,
         height=384,
         target_directory="samples/documentation-components-spotlight-slider",

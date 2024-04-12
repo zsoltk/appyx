@@ -7,11 +7,6 @@ plugins {
 }
 
 kotlin {
-    js(IR) {
-        moduleName = "appyx-interactions-gestures-incompletedrag-web"
-        browser()
-        binaries.executable()
-    }
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "appyx-interactions-gestures-incompletedrag-web-wa"
@@ -36,7 +31,7 @@ kotlin {
                 implementation(project(":appyx-components:internal:test-drive:test-drive"))
             }
         }
-        val jsMain by getting {
+        val wasmJsMain by getting {
             dependencies {
                 implementation(project(":demos:mkdocs:common"))
             }
@@ -50,6 +45,5 @@ compose.experimental {
 
 dependencies {
     add("kspCommonMainMetadata", project(":ksp:appyx-processor"))
-    add("kspJs", project(":ksp:appyx-processor"))
     add("kspWasmJs", project(":ksp:appyx-processor"))
 }

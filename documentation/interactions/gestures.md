@@ -138,8 +138,8 @@ Let's see how the internal demo, `TestDrive` implements its gestures:
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/mkdocs/appyx-interactions/interactions/sample1/web/build/dist/js/productionExecutable",
-        compile_task=":demos:mkdocs:appyx-interactions:interactions:sample1:web:jsBrowserDistribution",
+        project_output_directory="demos/mkdocs/appyx-interactions/interactions/sample1/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:mkdocs:appyx-interactions:interactions:sample1:web:wasmJsBrowserDistribution",
         width=512,
         height=384,
         target_directory="samples/documentation-interactions-index-1",
@@ -201,8 +201,8 @@ A more advanced version allows every state to move to each of the other 3 states
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/mkdocs/appyx-interactions/interactions/sample1/web/build/dist/js/productionExecutable",
-        compile_task=":demos:mkdocs:appyx-interactions:interactions:sample1:web:jsBrowserDistribution",
+        project_output_directory="demos/mkdocs/appyx-interactions/interactions/sample1/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:mkdocs:appyx-interactions:interactions:sample1:web:wasmJsBrowserDistribution",
         width=512,
         height=384,
         target_directory="samples/documentation-interactions-index-1",
@@ -280,8 +280,8 @@ The target UI state can be rendered immediately upon starting a drag. Note how t
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/mkdocs/appyx-interactions/gestures/dragprediction/web/build/dist/js/productionExecutable",
-        compile_task=":demos:mkdocs:appyx-interactions:gestures:dragprediction:web:jsBrowserDistribution",
+        project_output_directory="demos/mkdocs/appyx-interactions/gestures/dragprediction/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:mkdocs:appyx-interactions:gestures:dragprediction:web:wasmJsBrowserDistribution",
         width=512,
         height=384,
         target_directory="samples/documentation-gestures-drag-prediction",
@@ -314,8 +314,8 @@ Here's an example that uses a `completionThreshold` value of `0.15f` (15%). Noti
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/mkdocs/appyx-interactions/gestures/incompletedrag/web/build/dist/js/productionExecutable",
-        compile_task=":demos:mkdocs:appyx-interactions:gestures:incompletedrag:web:jsBrowserDistribution",
+        project_output_directory="demos/mkdocs/appyx-interactions/gestures/incompletedrag/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:mkdocs:appyx-interactions:gestures:incompletedrag:web:wasmJsBrowserDistribution",
         width=512,
         height=384,
         target_directory="samples/documentation-interactions-gestures-incomplete-drag",
