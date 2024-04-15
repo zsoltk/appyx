@@ -91,7 +91,7 @@ abstract class Node<NavTarget : Any>(
     val id: String
         get() = nodeContext.identifier
 
-    val plugins: List<Plugin> = plugins + listOfNotNull(this as? Plugin)
+    val plugins: List<Plugin> = plugins + appyxComponent + childAware + listOfNotNull(this as? Plugin)
 
     val ancestryInfo: AncestryInfo =
         nodeContext.ancestryInfo
