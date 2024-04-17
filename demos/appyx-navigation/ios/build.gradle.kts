@@ -1,29 +1,20 @@
 plugins {
     id("com.bumble.appyx.multiplatform")
     kotlin("multiplatform")
-    kotlin("native.cocoapods")
     id("org.jetbrains.compose")
     id("com.google.devtools.ksp")
 }
 
 kotlin {
-
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
-
-    cocoapods {
-        version = "1.0.0"
-        summary = "appyx-navigation iOS module"
-        homepage = "https://bumble-tech.github.io/appyx/navigation/"
-        ios.deploymentTarget = "17.0"
-        podfile = project.file("../iosApp/Podfile")
-        framework {
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
             baseName = "ios"
             isStatic = true
         }
-        license = "Apache License, Version 2.0"
-        authors = "https://github.com/bumble-tech/"
     }
 
     sourceSets {
