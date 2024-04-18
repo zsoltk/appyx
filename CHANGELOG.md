@@ -2,6 +2,16 @@
 
 ## Pending changes
 
+–
+
+## 2.0.0
+
+{==
+
+Please refer to [2.0.0-alpha10 -> 2.0.0 – Migration guide](2.0.0.md)
+
+==}
+
 ### API breaking changes
 
 - [#677](https://github.com/bumble-tech/appyx/pull/677) – Moved Builder, SimpleBuilder, Interactor to separate module
@@ -17,6 +27,10 @@
 ### Enhancement
 
 - [#679](https://github.com/bumble-tech/appyx/pull/679) – Simple api for backStackNode and spotlightNode
+
+
+<div style="text-align: center"><small>19 Apr 2024</small></div>
+
 
 ---
 
