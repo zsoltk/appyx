@@ -23,6 +23,7 @@ Please refer to [2.0.0-alpha10 -> 2.0.0 – Migration guide](2.0.0.md)
 - [#673](https://github.com/bumble-tech/appyx/pull/673) – Fix canHandeBackPress typo
 - [#671](https://github.com/bumble-tech/appyx/issue/671) – Fix ui state saving issue
 - [#694](https://github.com/bumble-tech/appyx/pull/694) – Fix appyxComponent state saving issue
+- [#697](https://github.com/bumble-tech/appyx/pull/697) – Fix missing resources in iOS sample app
 
 ### Enhancement
 
