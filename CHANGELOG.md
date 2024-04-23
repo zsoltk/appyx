@@ -28,7 +28,7 @@ Please refer to [2.0.0-alpha10 -> 2.0.0 – Migration guide](2.0.0.md)
 ### Enhancement
 
 - [#679](https://github.com/bumble-tech/appyx/pull/679) – Simple api for backStackNode and spotlightNode
-
+- [#689](https://github.com/bumble-tech/appyx/pull/689) - Add support for Kotlin/Wasm
 
 <div style="text-align: center"><small>19 Apr 2024</small></div>
 
