@@ -316,27 +316,26 @@ Otherwise, KDoctor will highlight which parts of your setup still need to be con
 Open the project in Android Studio and switch the view from **Android** to **Project** to see all the files and targets belonging to the project.
 The :demos module contains the sample target [appyx-navigation](https://bumble-tech.github.io/appyx/navigation/).
 
-This module follows the standard compose multiplatform project structure:
+This module follows the latest compose multiplatform project structure, with a `mainApp` module targeting all available platforms (Android, Desktop, iOS and Web).
+There is also a companion module named `iosApp` with the needed glue code for iOS. There are the targets and purposes:
 
-### common
+### commonMain
 
-This is a Kotlin module that contains the logic common for Android, Desktop, iOS and web applications, that is, the code you share between platforms.
+This Kotlin module contains the logic common for Android, Desktop, iOS and web applications, that is, the code you share between platforms.
 
-### android
+### androidMain
 
-This is a Kotlin module that builds into an Android application. It uses Gradle as the build system.
-The `android` module depends on and uses the `common` module as a regular Android library.
+This is a Kotlin module that builds into an Android application.
 
-### desktop
+### desktopMain
 
 This module builds into a Desktop application.
 
-### ios
+### iosMain
 
 This is an Xcode project that builds into an iOS application.
-The `:demos:appyx-navigation` module depends on and uses the `:demos:appyx-navigation:common` module as a CocoaPods dependency.
 
-### web
+### wasmJsMain
 
 This module builds into a Web app.
 
