@@ -22,7 +22,7 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
       - uses: gradle/wrapper-validation-action@v2
-      - uses: gradle/gradle-build-action@v3
+      - uses: gradle/actions/setup-gradle@v3
         with:
           cache-read-only: ${{ env.MAIN_BRANCH != 'true' }}
       - name: Build
@@ -75,7 +75,7 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
       - uses: gradle/wrapper-validation-action@v2
-      - uses: gradle/gradle-build-action@v3
+      - uses: gradle/actions/setup-gradle@v3
         with:
           cache-read-only: ${{ env.MAIN_BRANCH != 'true' }}
       - name: Check publication setup
@@ -99,7 +99,7 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
       - uses: gradle/wrapper-validation-action@v2
-      - uses: gradle/gradle-build-action@v3
+      - uses: gradle/actions/setup-gradle@v3
         with:
           cache-read-only: ${{ env.MAIN_BRANCH != 'true' }}
       - name: Setup Android SDK
@@ -137,7 +137,7 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
       - uses: gradle/wrapper-validation-action@v2
-      - uses: gradle/gradle-build-action@v3
+      - uses: gradle/actions/setup-gradle@v3
         with:
           cache-read-only: ${{ env.MAIN_BRANCH != 'true' }}
       - name: Setup Android SDK
@@ -171,7 +171,7 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
       - uses: gradle/wrapper-validation-action@v2
-      - uses: gradle/gradle-build-action@v3
+      - uses: gradle/actions/setup-gradle@v3
         with:
           cache-read-only: ${{ env.MAIN_BRANCH != 'true' }}
       - name: Generate distributions
