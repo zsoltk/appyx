@@ -7,31 +7,31 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.bumble.appyx.navigation.integrationpoint.IntegrationPoint
 import com.bumble.appyx.navigation.node.Node
+import com.bumble.appyx.navigation.platform.LifecycleListener
 import com.bumble.appyx.navigation.platform.LocalOnBackPressedDispatcherOwner
 import com.bumble.appyx.navigation.platform.OnBackPressedDispatcher
 import com.bumble.appyx.navigation.platform.OnBackPressedDispatcherOwner
-import com.bumble.appyx.navigation.platform.PlatformLifecycleRegistry
 import com.bumble.appyx.utils.customisations.NodeCustomisationDirectory
 import com.bumble.appyx.utils.customisations.NodeCustomisationDirectoryImpl
+import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.useContents
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import platform.UIKit.UIScreen
 
+@OptIn(ExperimentalForeignApi::class)
 @Suppress("ComposableParamOrder") // detekt complains as 'factory' param isn't a pure lambda
 @Composable
-fun <N : Node> IosNodeHost(
+fun <N : Node<*>> IosNodeHost(
     onBackPressedEvents: Flow<Unit>,
     modifier: Modifier = Modifier,
     integrationPoint: IntegrationPoint,
     customisations: NodeCustomisationDirectory = remember { NodeCustomisationDirectoryImpl(null) },
     factory: NodeFactory<N>,
 ) {
-    val platformLifecycleRegistry = remember {
-        PlatformLifecycleRegistry()
-    }
+    val lifecycleListener = remember { LifecycleListener() }
+
     val mainScreen = UIScreen.mainScreen
     val screenBounds = mainScreen.bounds
 
@@ -57,7 +57,7 @@ fun <N : Node> IosNodeHost(
 
     CompositionLocalProvider(LocalOnBackPressedDispatcherOwner provides onBackPressedDispatcherOwner) {
         NodeHost(
-            lifecycle = platformLifecycleRegistry,
+            lifecycle = lifecycleListener.lifecycle,
             integrationPoint = integrationPoint,
             modifier = modifier,
             customisations = customisations,

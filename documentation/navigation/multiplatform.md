@@ -10,6 +10,7 @@ title: Appyx Navigation – Multiplatform
 ![badge-jvm](https://img.shields.io/badge/platform-jvm-orange)
 ![badge-macos](https://img.shields.io/badge/platform-macos-purple)
 ![badge-js](https://img.shields.io/badge/platform-js-yellow)
+![badge-wasm](https://img.shields.io/badge/platform-wasm-teal)
 ![badge-ios](https://img.shields.io/badge/platform-ios-lightgray)
 
 ## Lifecycle
@@ -90,9 +91,9 @@ class MainActivity : NodeActivity() {
             YourAppTheme {
                 NodeHost(
                     lifecycle = AndroidLifecycle(LocalLifecycleOwner.current.lifecycle),
-                    integrationPoint = appyxV2IntegrationPoint
+                    integrationPoint = appyxIntegrationPoint
                 ) {
-                    RootNode(buildContext = it)
+                    RootNode(nodeContext = it)
                 }
             }
         }
@@ -124,7 +125,7 @@ fun main() = application {
                         if (it is Events.OnBackPressed) Unit else null
                     }
                 ) { 
-                    RootNode(buildContext = it)
+                    RootNode(nodeContext = it)
                 }
             }
         }
@@ -135,10 +136,13 @@ fun main() = application {
 ### Web
 
 ```kotlin
+// Add this only when targeting Kotlin/Wasm as this method isn't exposed anywhere
+external fun onWasmReady(onReady: () -> Unit)
+
 fun main() {
     val events: Channel<Unit> = Channel()
     onWasmReady {
-        BrowserViewportWindow("Your app") {
+       CanvasBasedWindow("Your app") {
             val requester = remember { FocusRequester() }
             var hasFocus by remember { mutableStateOf(false) }
             var screenSize by remember { mutableStateOf(ScreenSize(0.dp, 0.dp)) }
@@ -162,7 +166,7 @@ fun main() {
                         screenSize = screenSize,
                         onBackPressedEvents = events.receiveAsFlow(),
                     ) { 
-                        RootNode(buildContext = it)
+                        RootNode(nodeContext = it)
                     }
                 }
 
@@ -191,7 +195,7 @@ fun MainViewController() = ComposeUIViewController {
             onBackPressedEvents = backEvents.receiveAsFlow()
         ) {
             RootNode(
-                buildContext = it
+               nodeContext = it
             )
         }
     }
@@ -230,7 +234,6 @@ In the above [desktop](#desktop) and [web](#web) examples there is a reference t
 You can configure any `KeyEvent` to trigger a back event via the events `Channel`. In this example the `OnBackPressed` event is launched when the backspace key is pressed down:
 
 ```kotlin
-@OptIn(ExperimentalComposeUiApi::class)
 private fun onKeyEvent(
     keyEvent: KeyEvent,
     events: Channel<Events>,
@@ -252,3 +255,165 @@ On [iOS](#ios), you can design a user interface element to enable back navigatio
 In the example mentioned earlier, we create a Composable component `BackButton` that includes an `ArrowBack` icon. 
 When this button is clicked, it triggers the back event through the `backEvents` `Channel`. 
 
+## Setting up the environment for execution
+
+Setting up the environment for execution
+
+{==
+
+**Warning**
+
+In order to launch the iOS target, you need a Mac with macOS to write and run iOS-specific code on simulated or real devices.
+
+This is an Apple requirement.
+
+The instructions here are tweaked and inspired from the [Compose-Multiplatform-iOS template](https://github.com/JetBrains/compose-multiplatform-ios-android-template).
+
+==}
+
+To work with this project, you need the following:
+
+* A machine running a recent version of macOS
+* [Xcode](https://apps.apple.com/us/app/xcode/id497799835)
+* [Android Studio](https://developer.android.com/studio)
+* [Kotlin Multiplatform Mobile plugin](https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform-mobile)
+* [CocoaPods dependency manager](https://kotlinlang.org/docs/native-cocoapods.html)
+
+### Check your environment
+
+Before you start, use the [KDoctor](https://github.com/Kotlin/kdoctor) tool to ensure that your development environment is configured correctly:
+
+1. Install KDoctor with [Homebrew](https://brew.sh/):
+
+    ```text
+    brew install kdoctor
+    ```
+
+2. Run KDoctor in your terminal:
+
+    ```text
+    kdoctor
+    ```
+
+   If everything is set up correctly, you'll see valid output:
+
+   ```text
+   Environment diagnose (to see all details, use -v option):
+   [✓] Operation System
+   [✓] Java
+   [✓] Android Studio
+   [✓] Xcode
+   [✓] Cocoapods
+
+   Conclusion:
+     ✓ Your system is ready for Kotlin Multiplatform Mobile development!
+   ```
+
+Otherwise, KDoctor will highlight which parts of your setup still need to be configured and will suggest a way to fix them.
+
+## The project structure
+
+Open the project in Android Studio and switch the view from **Android** to **Project** to see all the files and targets belonging to the project.
+The :demos module contains the sample target [appyx-navigation](https://bumble-tech.github.io/appyx/navigation/).
+
+This module follows the latest compose multiplatform project structure, with a `mainApp` module targeting all available platforms (Android, Desktop, iOS and Web).
+There is also a companion module named `iosApp` with the needed glue code for iOS. There are the targets and purposes:
+
+### commonMain
+
+This Kotlin module contains the logic common for Android, Desktop, iOS and web applications, that is, the code you share between platforms.
+
+### androidMain
+
+This is a Kotlin module that builds into an Android application.
+
+### desktopMain
+
+This module builds into a Desktop application.
+
+### iosMain
+
+This is an Xcode project that builds into an iOS application.
+
+### wasmJsMain
+
+This module builds into a Web app.
+
+## Run your application
+
+### On Android
+
+To run your application on an Android emulator:
+
+1. Ensure you have an Android virtual device available. Otherwise, [create one](https://developer.android.com/studio/run/managing-avds#createavd).
+2. In the list of run configurations, select `demos.appyx-navigation.android`.
+3. Choose your virtual/physical device and click **Run**.
+
+### On iOS
+
+#### Running on a simulator
+
+To run your application on an iOS simulator in Android Studio, modify the `iOS` run configuration:
+
+{==
+
+1. In the list of run configurations, select **Edit Configurations**:
+2. Navigate to **iOS Application** | **iosApp**.
+3. Select the desired `.xcworkspace` file under `XCode project file` which can be found in `/demos/appyx-navigation/iosApp/iosApp.xcworkspace`.
+4. Ensure `Xcode project scheme` is set to `iosApp`.
+5. In the **Execution target** list, select your target device. Click **OK**.
+6. The `iosApp` run configuration is now available. Click **Run** next to your virtual device.
+
+==}
+
+#### Running on a real device
+
+To run the Compose Multiplatform application on a real iOS device. You'll need the following:
+
+* The `TEAM_ID` associated with your [Apple ID](https://support.apple.com/en-us/HT204316)
+* The iOS device registered in Xcode
+
+##### Finding your Team ID
+
+In the terminal, run `kdoctor --team-ids` to find your Team ID.
+KDoctor will list all Team IDs currently configured on your system.
+
+To run the application, set the `TEAM_ID`:
+
+{==
+
+1. In the project, navigate to the `iosApp/Configuration/Config.xcconfig` file.
+2. Set your `TEAM_ID`.
+3. Re-open the project in Android Studio. It should show the registered iOS device in the `iosApp` run configuration.
+
+==}
+
+### On Desktop
+
+To run the application as a JVM target on desktop:
+
+{==
+
+1. In the list of run configurations, select **Edit Configurations**.
+2. Click **Add new configuration** and select **Gradle**.
+3. Set `run` configuration under `Run`.
+4. Select the desired target under `Gradle project` to be executed (for example: `appyx:demos:appyx-navigation:desktop`).
+5. The desktop configuration for the desired target is now available. Click **Run** to execute.
+
+==}
+
+### On Web
+
+To run the application on web:
+
+{==
+
+1. In the list of run configurations, select **Edit Configurations**.
+2. Click **Add new configuration** and select **Gradle**.
+3. Decide which target you prefer and choose the appropriate task under run:
+      - `jsBrowserDevelopmentRun` for targeting Kotlin/JS.
+      - `wasmJsBrowserDevelopmentRun` for targeting Kotlin/Wasm. 
+4. Select the desired target under `Gradle project` to be executed (for example: `appyx:demos:appyx-navigation:web`).
+5. The web configuration for the desired target is now available. Click **Run** to execute.
+
+==}

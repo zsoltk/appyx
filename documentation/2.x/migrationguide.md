@@ -40,7 +40,8 @@ Check also [Multiplatform](../navigation/multiplatform.md) documentation and the
 
 - 1.x → 2.x
 - `NavModel` → `AppyxComponent`
-- `TransitionHandler` → `MotionController`
+- `TransitionHandler` → `Visualisation`
+- `BuildContext` → `NodeContext`
 
 
 ## Migration guide
@@ -78,22 +79,23 @@ Artifacts have a `utils-` prefix:
 +implementation("com.bumble.appyx:utils-testing-junit5")
 ```
 
-
 ### MainActivity
 
-```diff
--import com.bumble.appyx.core.integration.NodeHost
--import com.bumble.appyx.core.integrationpoint.NodeActivity
+If you migrate all of your codebase from 1.x to 2.x in a single go, you should skip this step. However, if you intend to keep them in parallel for a gradual migration, you must do the following:
 
-+import com.bumble.appyx.navigation.integration.NodeHost
-+import com.bumble.appyx.navigation.integrationpoint.NodeActivity
+- Update your 1.x version to `1.4.1-migrate-2.x`
+- Rename `appyxIntegrationPoint` usage in 1.x code to `appyxV1IntegrationPoint`:
+
+```diff
+    import com.bumble.appyx.core.integration.NodeHost
+    import com.bumble.appyx.core.integrationpoint.NodeActivity
 
     class MainActivity : NodeActivity() {
          super.onCreate(savedInstanceState)
          setContent {
              HelloAppyxTheme {
 -                NodeHost(integrationPoint = appyxIntegrationPoint) {
-+                NodeHost(integrationPoint = appyxV2IntegrationPoint) {
++                NodeHost(integrationPoint = appyxV1IntegrationPoint) {
                      RootNode(it)
                  }
              }
@@ -115,26 +117,28 @@ Artifacts have a `utils-` prefix:
 +import com.bumble.appyx.components.backstack.BackStackModel
 +import com.bumble.appyx.components.backstack.operation.push
 +import com.bumble.appyx.components.backstack.ui.fader.BackStackFader
-+import com.bumble.appyx.navigation.composable.AppyxComponent
-+import com.bumble.appyx.navigation.modality.BuildContext
++import com.bumble.appyx.navigation.composable.AppyxNavigationContainer
++import com.bumble.appyx.navigation.modality.NodeContext
 +import com.bumble.appyx.navigation.node.Node
 +import com.bumble.appyx.navigation.node.ParentNode
 
 class RootNode(
-    buildContext: BuildContext,
+-    buildContext: BuildContext,
++    nodeContext: NodeContext,
     private val backStack: BackStack<NavTarget> = BackStack(
 -        initialElement = Child1,
 -        savedStateMap = buildContext.savedStateMap
 +        model = BackStackModel(
 +            initialTarget = Child1,
-+            savedStateMap = buildContext.savedStateMap
++            savedStateMap = nodeContext.savedStateMap
 +        ),
-+        motionController = { BackStackFader(it) },
++        visualisation = { BackStackFader(it) },
      ),
  ) : ParentNode<RootNode.NavTarget>(
 -    navModel = backStack,
 +    appyxComponent = backStack,
-     buildContext = buildContext
+-     buildContext = buildContext
++     nodeContext = nodeContext
  ) {
 
     sealed class NavTarget {
@@ -144,18 +148,20 @@ class RootNode(
 
 -    override fun resolve(navTarget: NavTarget, buildContext: BuildContext): Node =
 -        when (navTarget) {
-+    override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
-+        when (interactionTarget) {
-            is Child1 -> Child1Node(buildContext) { backStack.push(Child2) }
-            is Child2 -> Child2Node(buildContext)
+-            is Child1 -> Child1Node(buildContext) { backStack.push(Child2) }
+-            is Child2 -> Child2Node(buildContext)
++    override fun buildChildNode(reference: NavTarget, nodeContext: NodeContext): Node =
++        when (reference) {
++            is Child1 -> Child1Node(nodeContext) { backStack.push(Child2) }
++            is Child2 -> Child2Node(nodeContext)
         }
 
     @Composable
-    override fun View(modifier: Modifier) {
+    override fun Content(modifier: Modifier) {
 -        Children(
 -            navModel = backStack,
 -            transitionHandler = rememberBackstackFader(transitionSpec = { spring() }),
-+        AppyxComponent(
++        AppyxNavigationContainer(
 +            appyxComponent = backStack,
             modifier = Modifier.fillMaxSize()
         )
@@ -171,7 +177,7 @@ class RootNode(
 -import com.bumble.appyx.core.integrationpoint.IntegrationPointStub
 
 +import com.bumble.appyx.navigation.integration.NodeHost
-+import com.bumble.appyx.navigation.integrationpoint.IntegrationPointStub
++import com.bumble.appyx.navigation.integration.IntegrationPointStub
 
 @Preview
 @Composable
@@ -179,7 +185,7 @@ fun RootNodePreview() {
     Box(Modifier.fillMaxSize()) {
         NodeHost(integrationPoint = IntegrationPointStub()) {
             RootNode(
-                buildContext = BuildContext.root(null)
+                nodeContext = NodeContext.root(null)
             )
         }
     }

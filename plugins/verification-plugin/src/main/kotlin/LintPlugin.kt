@@ -21,6 +21,7 @@ class LintPlugin : Plugin<Project> {
                 sarifReport = true
                 baseline = target.file("lint-baseline.xml")
                 warningsAsErrors = true
+                disable += listOf("ObsoleteLintCustomCheck")
             }
         }
 

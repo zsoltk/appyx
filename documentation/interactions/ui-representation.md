@@ -74,8 +74,8 @@ Doing so, Appyx will animate elements between these `TargetUiStates` as the abst
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/mkdocs/appyx-interactions/interactions/sample2/web/build/distributions",
-        compile_task=":demos:mkdocs:appyx-interactions:interactions:sample2:web:jsBrowserDistribution",
+        project_output_directory="demos/mkdocs/appyx-interactions/interactions/sample2/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:mkdocs:appyx-interactions:interactions:sample2:web:wasmJsBrowserDistribution",
         width=512,
         height=384,
         target_directory="samples/documentation-interactions-ui-1",
@@ -189,8 +189,8 @@ val rotationY = motionPropertyRenderValue<Float, RotationY>()
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/mkdocs/appyx-interactions/interactions/observemp/web/build/distributions",
-        compile_task=":demos:mkdocs:appyx-interactions:interactions:observemp:web:jsBrowserDistribution",
+        project_output_directory="demos/mkdocs/appyx-interactions/interactions/observemp/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:mkdocs:appyx-interactions:interactions:observemp:web:wasmJsBrowserDistribution",
         width=512,
         height=384,
         target_directory="samples/documentation-interactions-ui-observe-mp",

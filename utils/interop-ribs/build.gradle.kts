@@ -27,10 +27,8 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.lifecycle.java8)
     implementation(libs.androidx.activity.compose)
-    implementation(libs.compose.ui.ui)
 
     androidTestImplementation(composeBom)
-    androidTestImplementation(libs.androidx.activity.compose)
     androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.compose.foundation.layout)

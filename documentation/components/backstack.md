@@ -23,8 +23,8 @@ Class: `BackStackSlider`
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/mkdocs/appyx-components/backstack/slider/web/build/distributions",
-        compile_task=":demos:mkdocs:appyx-components:backstack:slider:web:jsBrowserDistribution",
+        project_output_directory="demos/mkdocs/appyx-components/backstack/slider/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:mkdocs:appyx-components:backstack:slider:web:wasmJsBrowserDistribution",
         width=512,
         height=384,
         target_directory="samples/documentation-components-backstack-slider",
@@ -39,8 +39,8 @@ Class: `BackStackParallax`
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/mkdocs/appyx-components/backstack/parallax/web/build/distributions",
-        compile_task=":demos:mkdocs:appyx-components:backstack:parallax:web:jsBrowserDistribution",
+        project_output_directory="demos/mkdocs/appyx-components/backstack/parallax/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:mkdocs:appyx-components:backstack:parallax:web:wasmJsBrowserDistribution",
         width=512,
         height=384,
         target_directory="samples/documentation-components-backstack-parallax",
@@ -55,8 +55,8 @@ Class: `BackStack3D`
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/mkdocs/appyx-components/backstack/stack3d/web/build/distributions",
-        compile_task=":demos:mkdocs:appyx-components:backstack:stack3d:web:jsBrowserDistribution",
+        project_output_directory="demos/mkdocs/appyx-components/backstack/stack3d/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:mkdocs:appyx-components:backstack:stack3d:web:wasmJsBrowserDistribution",
         width=512,
         height=384,
         target_directory="samples/documentation-components-backstack-stack3d",
@@ -71,8 +71,8 @@ Class: `BackStackFader`
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/mkdocs/appyx-components/backstack/fader/web/build/distributions",
-        compile_task=":demos:mkdocs:appyx-components:backstack:fader:web:jsBrowserDistribution",
+        project_output_directory="demos/mkdocs/appyx-components/backstack/fader/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:mkdocs:appyx-components:backstack:fader:web:wasmJsBrowserDistribution",
         width=512,
         height=384,
         target_directory="samples/documentation-components-backstack-fader",
@@ -129,9 +129,9 @@ sealed class InteractionTarget {
 private val backStack: BackStack<InteractionTarget> = BackStack(
     model = BackStackModel(
         initialTargets = listOf(InteractionTarget.SomeElement),
-        savedStateMap = buildContext.savedStateMap
+        savedStateMap = nodeContext.savedStateMap
     ),
-    motionController = { BackStackSlider(it) } // or other visualisations 
+    visualisation = { BackStackSlider(it) } // or other visualisations 
 )
 ```
 

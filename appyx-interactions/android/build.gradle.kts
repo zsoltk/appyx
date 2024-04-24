@@ -10,12 +10,12 @@ appyx {
 dependencies {
     val composeBom = platform(libs.compose.bom)
 
-    api(project(":appyx-interactions:appyx-interactions"))
-    api(libs.compose.ui.test.junit4)
-    implementation(libs.androidx.test.core)
     implementation(composeBom)
+    implementation(libs.androidx.test.core)
+    implementation(libs.androidx.lifecycle.java8)
 
-    androidTestImplementation(composeBom)
+    implementation(project(":appyx-interactions:appyx-interactions"))
+    androidTestImplementation(libs.compose.ui.test.junit4.android)
     androidTestImplementation(libs.compose.ui.test.junit4)
 
     debugRuntimeOnly(libs.compose.ui.test.manifest)

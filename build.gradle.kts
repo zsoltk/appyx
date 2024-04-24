@@ -22,6 +22,7 @@ plugins {
     id("com.autonomousapps.dependency-analysis") version libs.versions.dependencyAnalysis.get()
     id("org.jetbrains.compose") version libs.versions.composePlugin.get() apply false
     id("org.jetbrains.kotlin.android") version libs.versions.kotlin.get() apply false
+    id("com.android.test") version libs.versions.agp.get() apply false
 }
 
 dependencyAnalysis {
@@ -29,6 +30,11 @@ dependencyAnalysis {
         all {
             onIncorrectConfiguration {
                 severity("fail")
+
+                exclude(
+                    // Should be ignored as it's raised in many modules due to misconfiguration.
+                    "org.jetbrains.kotlin:kotlin-stdlib"
+                )
             }
             onUnusedDependencies {
                 severity("fail")
@@ -43,7 +49,16 @@ dependencyAnalysis {
                     ":utils:testing-ui-activity",
 
                     // Convenience for convention plugins to avoid needing to define this.
-                    "org.junit.jupiter:junit-jupiter-api"
+                    "org.junit.jupiter:junit-jupiter-api",
+
+                    // Some modules declare these dependencies but have not used them yet.
+                    "androidx.compose.ui:ui-test-junit4",
+                    "androidx.test.espresso:espresso-core",
+                    "androidx.test.ext:junit",
+                    ":utils:testing-ui",
+
+                    // This is used in:demos:appyx-interactions:android. But raised as unused.
+                    "androidx.compose.material:material-icons-extended",
                 )
             }
         }
@@ -54,11 +69,33 @@ dependencyAnalysis {
                 exclude(":utils:testing-unit-common")
             }
         }
+        project(":appyx-interactions:android") {
+            onIncorrectConfiguration {
+                severity("fail")
+                exclude(":appyx-interactions:appyx-interactions")
+            }
+        }
         project(":utils:testing-junit5") {
             onUnusedDependencies {
                 severity("fail")
                 // Not used by the module, but exposed via api to avoid adding two dependencies.
                 exclude(":utils:testing-unit-common")
+            }
+        }
+        project(":utils:interop-ribs") {
+            onIncorrectConfiguration {
+                severity("fail")
+                exclude(
+                    // Should be ignored, as they could potentially clash with dependencies
+                    // from client code.
+                    "com.github.badoo.RIBs:rib-compose",
+                )
+            }
+            onUnusedDependencies {
+                severity("fail")
+                exclude(
+                    "androidx.activity:activity-compose",
+                )
             }
         }
     }
@@ -68,14 +105,16 @@ allprojects {
     configurations.all {
         resolutionStrategy.dependencySubstitution {
             substitute(module("com.bumble.appyx:customisations"))
-                .using(project(":utils:customisations"))
+                .using(project(":utils:utils-customisations"))
                 .because("RIBs uses Appyx customisations as external dependency")
         }
     }
 }
 
 val buildNonMkdocsTask = tasks.register("buildNonMkdocs")
-val jsBrowserDistributionMkdocsTask = tasks.register("jsBrowserDistributionMkdocs")
+val wasmJsBrowserDistributionMkdocsTask = tasks.register("wasmJsBrowserDistributionMkdocs")
+
+val conventionalPluginsWhiteList = listOf("benchmark-test")
 
 subprojects {
     // Allows avoiding building these modules as part of CI as they are also built for mkdocs.
@@ -94,8 +133,8 @@ subprojects {
         }
     } else {
         plugins.withId("org.jetbrains.kotlin.multiplatform") {
-            jsBrowserDistributionMkdocsTask
-                .configure { dependsOn(tasks.named("jsBrowserDistribution")) }
+            wasmJsBrowserDistributionMkdocsTask
+                .configure { dependsOn(tasks.named("wasmJsBrowserDistribution")) }
         }
     }
 
@@ -117,6 +156,7 @@ subprojects {
         }
     }
 
+
     afterEvaluate {
         // Ensure that all project modules use convention plugins
         if (childProjects.isEmpty()) {
@@ -124,7 +164,8 @@ subprojects {
                 !pluginManager.hasPlugin("com.bumble.appyx.android.library") &&
                 !pluginManager.hasPlugin("com.bumble.appyx.multiplatform")
             ) {
-                error("'$path' module must use a convention plugin")
+                if (!conventionalPluginsWhiteList.contains(project.name))
+                    error("'$path' module must use a convention plugin")
             }
         }
     }

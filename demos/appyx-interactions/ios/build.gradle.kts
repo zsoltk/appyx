@@ -1,23 +1,17 @@
 plugins {
     id("com.bumble.appyx.multiplatform")
     kotlin("multiplatform")
-    kotlin("native.cocoapods")
     id("org.jetbrains.compose")
     id("com.google.devtools.ksp")
 }
 
 kotlin {
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
-
-    cocoapods {
-        version = "1.0.0"
-        summary = "appyx-interactions ios module"
-        homepage = "https://bumble-tech.github.io/appyx/interactions/"
-        ios.deploymentTarget = "16.4"
-        podfile = project.file("../iosApp/Podfile")
-        framework {
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
             baseName = "ios"
             isStatic = true
         }
@@ -37,22 +31,15 @@ kotlin {
                 implementation(compose.material)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
-                implementation(project(":appyx-components:stable:spotlight:spotlight"))
-                implementation(project(":appyx-components:stable:backstack:backstack"))
+                implementation(project(":appyx-components:standard:spotlight:spotlight"))
+                implementation(project(":appyx-components:standard:backstack:backstack"))
             }
         }
     }
 }
 
-compose.experimental {
-    uikit.application {
-        projectName = "Appyx"
-        bundleIdPrefix = "com.bumble.appyx"
-    }
-}
-
 dependencies {
-    add("kspIosArm64", project(":ksp:mutable-ui-processor"))
-    add("kspIosX64", project(":ksp:mutable-ui-processor"))
-    add("kspIosSimulatorArm64", project(":ksp:mutable-ui-processor"))
+    add("kspIosArm64", project(":ksp:appyx-processor"))
+    add("kspIosX64", project(":ksp:appyx-processor"))
+    add("kspIosSimulatorArm64", project(":ksp:appyx-processor"))
 }

@@ -47,8 +47,8 @@ You can test their effects on the below sample. Try spamming the buttons:
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/mkdocs/appyx-interactions/interactions/sample3/web/build/distributions",
-        compile_task=":demos:mkdocs:appyx-interactions:interactions:sample3:web:jsBrowserDistribution",
+        project_output_directory="demos/mkdocs/appyx-interactions/interactions/sample3/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:mkdocs:appyx-interactions:interactions:sample3:web:wasmJsBrowserDistribution",
         width=512,
         height=384,
         target_directory="samples/documentation-interactions-index-3",

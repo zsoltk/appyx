@@ -1,11 +1,12 @@
 package com.bumble.appyx.interactions.permanent
 
-import com.bumble.appyx.interactions.core.model.AppyxComponent
-import com.bumble.appyx.interactions.core.model.progress.InstantProgressController
-import com.bumble.appyx.interactions.core.model.transition.Operation
-import com.bumble.appyx.interactions.core.state.MutableSavedStateMap
+import com.bumble.appyx.interactions.model.AppyxComponent
+import com.bumble.appyx.interactions.model.progress.InstantProgressController
+import com.bumble.appyx.interactions.model.transition.Operation
+import com.bumble.appyx.interactions.state.MutableSavedStateMap
 import com.bumble.appyx.interactions.permanent.PermanentModel.State
 import com.bumble.appyx.mapState
+import com.bumble.appyx.utils.multiplatform.SavedStateMap
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -17,6 +18,19 @@ class PermanentAppyxComponent<InteractionTarget : Any>(
     val model: PermanentModel<InteractionTarget>,
     val scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main),
 ) : AppyxComponent<InteractionTarget, State<InteractionTarget>> {
+
+
+    constructor(
+        savedStateMap: SavedStateMap?,
+        initialTargets: List<InteractionTarget> = emptyList(),
+        scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main),
+    ) : this(
+        model = PermanentModel(
+            savedStateMap = savedStateMap,
+            initialTargets = initialTargets
+        ),
+        scope = scope
+    )
 
     private val instant = InstantProgressController(model = model)
 
@@ -33,7 +47,7 @@ class PermanentAppyxComponent<InteractionTarget : Any>(
         instant.operation(operation)
     }
 
-    override fun canHandeBackPress(): StateFlow<Boolean> = MutableStateFlow(false)
+    override fun canHandleBackPress(): StateFlow<Boolean> = MutableStateFlow(false)
 
     override fun handleBackPress(): Boolean = false
 

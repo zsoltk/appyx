@@ -10,9 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Button
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -24,17 +24,17 @@ import androidx.compose.ui.unit.dp
 import com.bumble.appyx.components.experimental.promoter.Promoter
 import com.bumble.appyx.components.experimental.promoter.PromoterModel
 import com.bumble.appyx.components.experimental.promoter.operation.addFirst
-import com.bumble.appyx.components.experimental.promoter.ui.PromoterMotionController
-import com.bumble.appyx.interactions.core.AppyxComponent
-import com.bumble.appyx.interactions.core.model.transition.Operation.Mode.IMMEDIATE
-import com.bumble.appyx.interactions.core.model.transition.Operation.Mode.KEYFRAME
-import com.bumble.appyx.interactions.core.ui.helper.AppyxComponentSetup
-import com.bumble.appyx.interactions.sample.InteractionTarget
-import com.bumble.appyx.interactions.sample.InteractionTarget.Child1
-import com.bumble.appyx.interactions.sample.InteractionTarget.Child2
-import com.bumble.appyx.interactions.sample.InteractionTarget.Child3
-import com.bumble.appyx.interactions.sample.InteractionTarget.Child4
-import com.bumble.appyx.interactions.sample.android.Element
+import com.bumble.appyx.components.experimental.promoter.ui.PromoterVisualisation
+import com.bumble.appyx.interactions.composable.AppyxInteractionsContainer
+import com.bumble.appyx.interactions.model.transition.Operation.Mode.IMMEDIATE
+import com.bumble.appyx.interactions.model.transition.Operation.Mode.KEYFRAME
+import com.bumble.appyx.interactions.ui.helper.AppyxComponentSetup
+import com.bumble.appyx.interactions.utils.testing.TestTarget
+import com.bumble.appyx.interactions.utils.testing.TestTarget.Child1
+import com.bumble.appyx.interactions.utils.testing.TestTarget.Child2
+import com.bumble.appyx.interactions.utils.testing.TestTarget.Child3
+import com.bumble.appyx.interactions.utils.testing.TestTarget.Child4
+import com.bumble.appyx.interactions.utils.ui.Element
 import kotlin.math.roundToInt
 
 
@@ -47,9 +47,9 @@ fun PromoterExperiment(modifier: Modifier = Modifier) {
     val promoter = remember {
         Promoter(
             scope = coroutineScope,
-            model = PromoterModel<InteractionTarget>(savedStateMap = null),
-            motionController = {
-                PromoterMotionController(
+            model = PromoterModel<TestTarget>(savedStateMap = null),
+            visualisation = {
+                PromoterVisualisation(
                     uiContext = it
                 )
             },
@@ -71,10 +71,12 @@ fun PromoterExperiment(modifier: Modifier = Modifier) {
             .fillMaxSize()
     ) {
         val density = LocalDensity.current
-        val screenWidthPx = (LocalConfiguration.current.screenWidthDp * density.density).roundToInt()
-        val screenHeightPx = (LocalConfiguration.current.screenHeightDp * density.density).roundToInt()
+        val screenWidthPx =
+            (LocalConfiguration.current.screenWidthDp * density.density).roundToInt()
+        val screenHeightPx =
+            (LocalConfiguration.current.screenHeightDp * density.density).roundToInt()
 
-        AppyxComponent(
+        AppyxInteractionsContainer(
             appyxComponent = promoter,
             modifier = Modifier
                 .weight(0.9f)
@@ -82,9 +84,9 @@ fun PromoterExperiment(modifier: Modifier = Modifier) {
                     horizontal = 64.dp,
                     vertical = 12.dp
                 ),
-            element = {
+            elementUi = {
                 Element(
-                    elementUiModel = it,
+                    element = it,
                     modifier = Modifier.size(100.dp)
                 )
             },
@@ -100,13 +102,13 @@ fun PromoterExperiment(modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.Center
         ) {
             Button(
-                onClick = { promoter.addFirst(InteractionTarget.values().random(), KEYFRAME) }
+                onClick = { promoter.addFirst(TestTarget.entries.random(), KEYFRAME) }
             ) {
                 Text("KEYFRAME")
             }
             Spacer(Modifier.size(24.dp))
             Button(
-                onClick = { promoter.addFirst(InteractionTarget.values().random(), IMMEDIATE) }
+                onClick = { promoter.addFirst(TestTarget.entries.random(), IMMEDIATE) }
             ) {
                 Text("IMMEDIATE")
             }

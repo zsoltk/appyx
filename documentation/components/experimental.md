@@ -11,12 +11,12 @@ Other uses of the library to create complex transitions and gestures.
 
 ### Dating Cards
 
-Class: `CardsMotionController`
+Class: `CardsVisualisation`
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/mkdocs/appyx-components/experimental/datingcards/web/build/distributions",
-        compile_task=":demos:mkdocs:appyx-components:experimental:datingcards:web:jsBrowserDistribution",
+        project_output_directory="demos/mkdocs/appyx-components/experimental/datingcards/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:mkdocs:appyx-components:experimental:datingcards:web:wasmJsBrowserDistribution",
         width=512,
         height=384,
         target_directory="samples/documentation-components-experimental-datingcards",
@@ -27,12 +27,12 @@ Class: `CardsMotionController`
 
 ### Puzzle 15
 
-Class: `Puzzle15MotionController`
+Class: `Puzzle15Visualisation`
 
 {{
     compose_mpp_sample(
-        project_output_directory="demos/mkdocs/appyx-components/experimental/puzzle15/web/build/distributions",
-        compile_task=":demos:mkdocs:appyx-components:experimental:puzzle15:web:jsBrowserDistribution",
+        project_output_directory="demos/mkdocs/appyx-components/experimental/puzzle15/web/build/dist/wasmJs/productionExecutable",
+        compile_task=":demos:mkdocs:appyx-components:experimental:puzzle15:web:wasmJsBrowserDistribution",
         width=512,
         height=384,
         target_directory="samples/documentation-components-experimental-puzzle15",
